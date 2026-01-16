@@ -40,8 +40,8 @@ const Nav = () => {
         <div className='fixed top-[4vh] left-[7.5vw] z-2'>
             <div className='flex font-[font1] justify-between items-center w-[85vw]'>
                 <div className='flex items-center gap-2'>
-                    <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[3vw]' />
-                    <Link className='font-bold pt-1 text-[2.2vw] text-[#1D1E20]' href="/">Golden Bun</Link>
+                    <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[2.6vw]' />
+                    <Link className='font-bold pt-1 text-[1.8vw] text-[#1D1E20]' href="/">Golden Bun</Link>
                 </div>
                 <div className='flex items-center my-2 border-2 font-semibold rounded-full border-[#50525449]  text-[1.2vw] bg-[#fcfcfa]'>
                     <Link ref={homeRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/">Home</Link>

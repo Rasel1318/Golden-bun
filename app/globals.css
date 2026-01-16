@@ -4,6 +4,10 @@
     font-family: font1;
     src: url(/fonts/Baloo2-Regular.woff);
 }
+@font-face {
+    font-family: fontbold;
+    src: url(/fonts/Baloo2-ExtraBold.woff);
+}
 
 .transition-grid{
     position: fixed;

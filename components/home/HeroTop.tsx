@@ -1,22 +1,67 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { burgerContext } from '@/app/page'
+import gsap from 'gsap'
 
 const HeroTop = () => {
+    // Refs
+    const moveNameRef = useRef(null);
+    const moveDisRef = useRef(null);
+    const calNameWidRef = useRef(null);
+    const calDisWidRef = useRef(null);
 
-    const burgerInfo = useContext(burgerContext) as { name: string; description: string; price: number; img: string; }
+    // Contaxts
+    const burgerInfoContext = useContext(burgerContext);
+
+    useEffect(() => {
+        const width = calNameWidRef.current.getBoundingClientRect().width;
+        gsap.to(moveNameRef.current, {
+            x: 0
+        })
+    })
+    useEffect(() => {
+        const height = calDisWidRef.current.getBoundingClientRect().height;
+        gsap.to(moveDisRef.current, {
+            y:0
+        })
+    })
 
     return (
         <div className='w-full h-[75%] flex font-[font1] bg'>
             <div className='w-[45%] h-full flex flex-col justify-center gap-[2.5vh] '>
-                <p className='uppercase text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
-                <h1 className='text-[5vw] test-[#1D1E20] leading-[4.5vw] uppercase font-[fontbold]' >{burgerInfo.name}</h1>
-                <p className='text-[#505254] leading-[2.4vw] text-[1.9vw]'>{burgerInfo.description}</p>
+                <p className='uppercahiddense text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
+
+                <div ref={calNameWidRef} className=' overflow-hidden '>
+                    <div ref={moveNameRef} className='flex gap-[2.75vw] whitespace-nowrap ' >
+
+                        {burgerInfoContext.map((burgerInfo, index) => {
+                            return (
+                                // ml-[.1vw] mr-[2.35vw]
+                                <h1 key={index} className='text-[5vw] test-[#1D1E20] leading-[4.5vw] uppercase font-[fontbold]' >{burgerInfo.name.split(" ").slice(0, 2).join(" ")} <br />
+                                    {burgerInfo.name.split(" ").slice(2).join(" ")}</h1>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div ref={calDisWidRef} className='overflow-hidden bg-amber-500'>
+                    <div ref={moveDisRef} className=' h-[4.8vw]' >
+                        {burgerInfoContext.map((burgerInfo, index) => {
+                            return (
+                                <p key={index} className='text-[#505254] leading-[2.4vw] text-[1.9vw]'>{burgerInfo.description}</p>
+                            );
+                        })}
+                    </div>
+                </div>
+
                 <div className='flex items-center gap-[1vw]'>
                     <button className='uppercase border-2 bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
-                    <p className='text-[3vw] test-[#1D1E20] font-[fontbold]'>${burgerInfo.price}</p>
+                    <p className='text-[3vw] test-[#1D1E20] font-[fontbold]'>${burgerInfoContext[0].price}</p>
                 </div>
             </div>
+
+
+
             <div className='w-[55%] h-full flex items-center justify-center'>
                 <div className='w-fit h-fit relative'>
                     <div className='w-full h-full my-[3vw]  flex justify-center items-center'>

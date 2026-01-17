@@ -7,29 +7,42 @@ const HeroTop = () => {
     // Refs
     const moveNameRef = useRef(null);
     const moveDisRef = useRef(null);
+    const movePriceRef = useRef(null);
     const calNameWidRef = useRef(null);
     const calDisWidRef = useRef(null);
+    const calPriceWidRef = useRef(null);
 
     // Contaxts
-    const burgerInfoContext = useContext(burgerContext);
+    const {curr_selection, burgerInfoContext} = useContext(burgerContext);
 
+    // Animations
     useEffect(() => {
-        const width = calNameWidRef.current.getBoundingClientRect().width;
+        const widthName = calNameWidRef.current.getBoundingClientRect().width;
         gsap.to(moveNameRef.current, {
-            x: 0
+            x: -(curr_selection*widthName),
+            ease: "elastic.out(0.5,0.4)",
+            duration: 1.5,
         })
-    })
-    useEffect(() => {
-        const height = calDisWidRef.current.getBoundingClientRect().height;
+
+        const heightDis = calDisWidRef.current.getBoundingClientRect().height;
         gsap.to(moveDisRef.current, {
-            y:0
+            y: -(curr_selection*heightDis),
+            ease: "power3.out",
+            duration: 1,
         })
-    })
+
+        const heightPrice = calPriceWidRef.current.getBoundingClientRect().height;
+        gsap.to(movePriceRef.current, {
+            y: -(curr_selection*heightPrice),
+            ease: "power3.out",
+            duration: 1,
+        })
+    }, [curr_selection])
 
     return (
         <div className='w-full h-[75%] flex font-[font1] bg'>
             <div className='w-[45%] h-full flex flex-col justify-center gap-[2.5vh] '>
-                <p className='uppercahiddense text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
+                <p className='uppercase text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
 
                 <div ref={calNameWidRef} className=' overflow-hidden '>
                     <div ref={moveNameRef} className='flex gap-[2.75vw] whitespace-nowrap ' >
@@ -44,7 +57,7 @@ const HeroTop = () => {
                     </div>
                 </div>
 
-                <div ref={calDisWidRef} className='overflow-hidden bg-amber-500'>
+                <div ref={calDisWidRef} className='overflow-hidden'>
                     <div ref={moveDisRef} className=' h-[4.8vw]' >
                         {burgerInfoContext.map((burgerInfo, index) => {
                             return (
@@ -56,7 +69,15 @@ const HeroTop = () => {
 
                 <div className='flex items-center gap-[1vw]'>
                     <button className='uppercase border-2 bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
-                    <p className='text-[3vw] test-[#1D1E20] font-[fontbold]'>${burgerInfoContext[0].price}</p>
+                    <div ref={calPriceWidRef} className='overflow-hidden '>
+                        <div ref={movePriceRef} className=' h-[3.5vw]' >
+                            {burgerInfoContext.map((burgerInfo, index) => {
+                                return (
+                                    <p key={index} className='text-[3vw] leading-[3.55vw] test-[#1D1E20] font-[fontbold]'>${burgerInfo.price}</p>
+                                );
+                            })}
+                        </div>
+                    </div>
                 </div>
             </div>
 

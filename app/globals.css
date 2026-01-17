@@ -4,12 +4,12 @@
     font-family: font1;
     src: url(/fonts/Baloo2-Regular.woff);
 }
+
 @font-face {
     font-family: fontbold;
     src: url(/fonts/Baloo2-ExtraBold.woff);
 }
-
-.transition-grid{
+.transition-grid {
     position: fixed;
     top: 0;
     left: 0;
@@ -20,13 +20,8 @@
     overflow: hidden;
 }
 
-.transition-block{
+.transition-block {
     position: absolute;
     background-color: #FC9422;
     opacity: 0;
 }
-
-
-
-
-

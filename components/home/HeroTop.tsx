@@ -6,34 +6,44 @@ import gsap from 'gsap'
 const HeroTop = () => {
     // Refs
     const moveNameRef = useRef(null);
+    const NameWidRef = useRef(null);
     const moveDisRef = useRef(null);
     const movePriceRef = useRef(null);
     const calNameWidRef = useRef(null);
     const calDisWidRef = useRef(null);
     const calPriceWidRef = useRef(null);
+    const imgRef = useRef({});
 
     // Contaxts
-    const {curr_selection, burgerInfoContext} = useContext(burgerContext);
+    const { curr_selection, burgerInfoContext, imgSrc, setImgSrc} = useContext(burgerContext);
 
     // Animations
     useEffect(() => {
         const widthName = calNameWidRef.current.getBoundingClientRect().width;
+        const heightDis = calDisWidRef.current.getBoundingClientRect().height;
+        const heightPrice = calPriceWidRef.current.getBoundingClientRect().height;
+
+        setImgSrc(burgerInfoContext[curr_selection].img);
+        
+        // Error.. Not able to target the refs
+        gsap.to(imgRef.current[curr_selection],{
+            opacity:0
+        })
+
         gsap.to(moveNameRef.current, {
-            x: -(curr_selection*widthName),
+            x: -(curr_selection * widthName),
             ease: "elastic.out(0.5,0.4)",
             duration: 1.5,
         })
 
-        const heightDis = calDisWidRef.current.getBoundingClientRect().height;
         gsap.to(moveDisRef.current, {
-            y: -(curr_selection*heightDis),
+            y: -(curr_selection * heightDis),
             ease: "power3.out",
             duration: 1,
         })
 
-        const heightPrice = calPriceWidRef.current.getBoundingClientRect().height;
         gsap.to(movePriceRef.current, {
-            y: -(curr_selection*heightPrice),
+            y: -(curr_selection * heightPrice),
             ease: "power3.out",
             duration: 1,
         })
@@ -45,13 +55,11 @@ const HeroTop = () => {
                 <p className='uppercase text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
 
                 <div ref={calNameWidRef} className=' overflow-hidden '>
-                    <div ref={moveNameRef} className='flex gap-[2.75vw] whitespace-nowrap ' >
-
+                    <div ref={moveNameRef} className=' flex ' >
                         {burgerInfoContext.map((burgerInfo, index) => {
                             return (
-                                // ml-[.1vw] mr-[2.35vw]
-                                <h1 key={index} className='text-[5vw] test-[#1D1E20] leading-[4.5vw] uppercase font-[fontbold]' >{burgerInfo.name.split(" ").slice(0, 2).join(" ")} <br />
-                                    {burgerInfo.name.split(" ").slice(2).join(" ")}</h1>
+                                <h1 ref={NameWidRef} key={index} className='text-[5vw] shrink-0  w-[38.5vw] test-[#1D1E20] leading-[4.5vw] uppercase font-[fontbold]' >{burgerInfo.name.split("/").slice(0, 1)} <br />
+                                    {burgerInfo.name.split("/").slice(1)}</h1>
                             );
                         })}
                     </div>
@@ -81,12 +89,18 @@ const HeroTop = () => {
                 </div>
             </div>
 
-
-
             <div className='w-[55%] h-full flex items-center justify-center'>
                 <div className='w-fit h-fit relative'>
-                    <div className='w-full h-full my-[3vw]  flex justify-center items-center'>
-                        <Image src="/media/classic_cheeses.png" className='w-[30vw]' alt="Burger Imgae" loading="eager" width={585} height={530} />
+                    <div className='w-full h-full my-[1.5vw]  flex justify-center items-center'>
+                        <div className='h-[30vw] w-[30vw] relative '>
+                            {burgerInfoContext.map((burgerInfo, index) => {
+                            return (
+                                <Image key={index} ref={el =>(imgRef.current[index] = el)} src={burgerInfo.img} className={`absolute opacity-0 top-[2vw] w-[30vw] z-${index}`} alt="Burger Imgae" loading="eager" width={585} height={530} />
+                            );
+                        })}
+
+                        </div>
+                        
                     </div>
                     <Image className='w-[4vw] absolute top-[1.5vw] left-[1.5vw]' src="/svg/tomato.svg" loading="eager" alt="burger-logo" width={50} height={50} />
                     <Image className='w-[4vw] absolute bottom-[1vw] left-[27vw]' src="/svg/tomato.svg" loading="eager" alt="burger-logo" width={50} height={50} />

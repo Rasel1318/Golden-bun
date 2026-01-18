@@ -28,28 +28,28 @@ const Home = () => {
     },
     {
       name: "Ghost Pepper/Burger",
-      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
+      description: "Fiery beef patty with melted cheese and ghost pepper sauce for extreme heat lovers.",
       price: 6.99,
       img: "/media/ghost_pepper_burger.png",
       rating: "★★★★★"
     },
     {
       name: "Mushroom/Melt Burger",
-      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
+      description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
       price: 6.99,
       img: "/media/mushroom_melt_burger.png",
       rating: "★★★★★"
     },
     {
       name: "Grilled/Beef Sub",
-      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
+      description: "Juicy grilled beef layered with cheese, crisp vegetables, and toasted sub roll.",
       price: 6.99,
       img: "/media/grilled_beef_sub.png",
       rating: "★★★★★"
     },
     {
       name: "Chili Cheese/Hot Dog",
-      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
+      description: "A bold chili cheese hot dog packed with flavor in every bite.",
       price: 6.99,
       img: "/media/chili_cheese_Hot_dog.png",
       rating: "★★★★★"

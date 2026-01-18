@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { burgerContext } from '@/app/page';
 import gsap from 'gsap';
-import { resourceUsage } from 'process';
 
 const HeroTop = () => {
     // Refs
@@ -14,6 +13,7 @@ const HeroTop = () => {
     const calNameWidRef = useRef(null);
     const calDisWidRef = useRef(null);
     const calPriceWidRef = useRef(null);
+    const AllHeroTextRef = useRef(null);
 
     // ImageRefs
     const imgRef = useRef({});
@@ -28,6 +28,13 @@ const HeroTop = () => {
     const [prev_selection, setPrev_selection] = useState(-1);
 
     // Animations
+    useEffect(()=>{
+        gsap.fromTo(AllHeroTextRef.current,{
+            x:-150,
+            duration:0.4,
+            opacity:0,
+        },{x:0, opacity:1,})
+    }, [])
 
     useEffect(() => {
         setPrev_selection((prev) => {
@@ -158,8 +165,8 @@ const HeroTop = () => {
     }, [curr_selection]);
 
     return (
-        <div className='w-full h-[75%] flex font-[font1] bg'>
-            <div className='w-[45%] h-full flex flex-col justify-center gap-[2.5vh] '>
+        <div className='w-full h-[75%] flex font-[font1]'>
+            <div ref={AllHeroTextRef} className='w-[45%] h-full flex flex-col justify-center gap-[2.5vh] '>
                 <p className='uppercase text-[1.1vw] text-[#d69026] rounded-3xl border-2 w-fit px-4 py-1 font-semibold bg-[#FEE4C2]'>the original taste</p>
 
                 <div ref={calNameWidRef} className=' overflow-hidden '>

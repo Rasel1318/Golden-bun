@@ -22,14 +22,14 @@ const Home = () => {
     {
       name: "Double Beef/Bacon Burger",
       description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
-      price: 6.99,
+      price: 7.99,
       img: "/media/double_beef.webp",
       rating: "★★★★★"
     },
     {
       name: "Ghost Pepper/Burger",
       description: "Fiery beef patty with melted cheese and ghost pepper sauce for extreme heat lovers.",
-      price: 6.99,
+      price: 5.99,
       img: "/media/ghost_pepper_burger.png",
       rating: "★★★★★"
     },
@@ -43,14 +43,14 @@ const Home = () => {
     {
       name: "Grilled/Beef Sub",
       description: "Juicy grilled beef layered with cheese, crisp vegetables, and toasted sub roll.",
-      price: 6.99,
+      price: 4.99,
       img: "/media/grilled_beef_sub.png",
       rating: "★★★★★"
     },
     {
       name: "Chili Cheese/Hot Dog",
       description: "A bold chili cheese hot dog packed with flavor in every bite.",
-      price: 6.99,
+      price: 3.99,
       img: "/media/chili_cheese_Hot_dog.png",
       rating: "★★★★★"
     },

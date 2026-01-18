@@ -6,12 +6,14 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react';
 
 const Nav = () => {
+    // Refs
     const homeRef = useRef(null), menuRef = useRef(null), storyRef = useRef(null), contactRef = useRef(null);
-    
+    const navRaf = useRef(null);
+
     let path = usePathname();
     const [pre_path, setPre_path] = useState(path);
     
-
+    // Animations
     useEffect(() => {
         const tl = gsap.timeline();
         if(pre_path==='/'){
@@ -35,9 +37,16 @@ const Nav = () => {
         })
     }, [path])
 
+    useEffect(()=>{
+        gsap.from(navRaf.current, {
+            y: -100,
+            opacity:0,
+            duration:0.4,
+        })
+    } ,[])
 
     return (
-        <div className='fixed top-[4vh] left-[7.5vw] z-2'>
+        <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-2'>
             <div className='flex font-[font1] justify-between items-center w-[85vw]'>
                 <div className='flex items-center gap-2'>
                     <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[2.6vw]' />

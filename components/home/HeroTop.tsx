@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
-import { burgerContext } from '@/app/page';
+import { burgerContext } from '@/app/layout';
 import gsap from 'gsap';
 
 const HeroTop = () => {
@@ -28,114 +28,119 @@ const HeroTop = () => {
     const [prev_selection, setPrev_selection] = useState(-1);
 
     // Animations
-    useEffect(()=>{
-        gsap.fromTo(AllHeroTextRef.current,{
-            x:-150,
-            duration:0.4,
-            opacity:0,
-        },{x:0, opacity:1,})
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.from(AllHeroTextRef.current, {
+                x: -150,
+                duration: 0.4,
+                opacity: 0,
+            })
+        });
+        return () => ctx.revert();
     }, [])
 
     useEffect(() => {
-        setPrev_selection((prev) => {
-            if (prev !== -1) {
-                gsap.to(imgRef.current[prev], {
-                    opacity: 0,
-                    scale: 0.8,
-                    duration: 0.3,
+        const ctx = gsap.context(() => {
+            setPrev_selection((prev) => {
+                if (prev !== -1) {
+                    gsap.to(imgRef.current[prev], {
+                        opacity: 0,
+                        scale: 0.8,
+                        duration: 0.3,
+                        ease: "power3.out",
+                        overwrite: "auto",
+                    });
+
+                    gsap.to(svgTLeftRef.current, {
+                        x: 30, y: 30,
+                        opacity: 0, duration: 0.3,
+                        ease: "power3.out",
+                        overwrite: "auto",
+                    })
+                    gsap.to(svgTRightRef.current, {
+                        x: -30, y: 30,
+                        opacity: 0, duration: 0.3,
+                        ease: "power3.out",
+                        overwrite: "auto",
+                    })
+                    gsap.to(svgBLeftRef.current, {
+                        x: 30, y: -30,
+                        opacity: 0, duration: 0.3,
+                        ease: "power3.out",
+                        overwrite: "auto",
+                    })
+                    gsap.to(svgBRightRef.current, {
+                        x: -30, y: -30,
+                        opacity: 0, duration: 0.3,
+                        ease: "power3.out",
+                        overwrite: "auto",
+                    })
+                }
+
+                gsap.fromTo(svgTLeftRef.current, {
+                    x: 30, y: 30,
+                    opacity: 0, duration: 0.4,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                }, {
+                    x: -30, y: -30,
+                    opacity: 1, delay: 0.1,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                });
+                gsap.fromTo(svgTRightRef.current, {
+                    x: -30, y: 30,
+                    opacity: 0, duration: 0.4,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                }, {
+                    x: 30, y: -30,
+                    opacity: 1, delay: 0.1,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                });
+                gsap.fromTo(svgBLeftRef.current, {
+                    x: 30, y: -30,
+                    opacity: 0, duration: 0.4,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                }, {
+                    x: -30, y: 30,
+                    opacity: 1, delay: 0.1,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                });
+                gsap.fromTo(svgBRightRef.current, {
+                    x: -30, y: -30,
+                    opacity: 0, duration: 0.4,
+                    ease: "power3.out",
+                    overwrite: "auto",
+                }, {
+                    x: 30, y: 30,
+                    opacity: 1, delay: 0.1,
                     ease: "power3.out",
                     overwrite: "auto",
                 });
 
-                gsap.to(svgTLeftRef.current, {
-                    x: 30, y: 30,
-                    opacity: 0, duration: 0.3,
+                gsap.fromTo(imgRef.current[curr_selection], {
+                    opacity: 0,
+                    scale: 0.8,
                     ease: "power3.out",
+                    duration: 0.3,
                     overwrite: "auto",
-                })
-                gsap.to(svgTRightRef.current, {
-                    x: -30, y: 30,
-                    opacity: 0, duration: 0.3,
-                    ease: "power3.out",
-                    overwrite: "auto",
-                })
-                gsap.to(svgBLeftRef.current, {
-                    x: 30, y: -30,
-                    opacity: 0, duration: 0.3,
-                    ease: "power3.out",
-                    overwrite: "auto",
-                })
-                gsap.to(svgBRightRef.current, {
-                    x: -30, y: -30,
-                    opacity: 0, duration: 0.3,
-                    ease: "power3.out",
-                    overwrite: "auto",
-                })
-
-            }
-
-            gsap.fromTo(svgTLeftRef.current, {
-                x: 30, y: 30,
-                opacity: 0, duration: 0.4,
-                ease: "power3.out",
-                overwrite: "auto",
-            }, {
-                x: -30, y: -30,
-                opacity: 1, delay: 0.1,
-                ease: "power3.out",
-                overwrite: "auto",
+                },
+                    {
+                        scale: 1.05,
+                        delay: .1,
+                        ease: "power3.out",
+                        opacity: 1,
+                        overwrite: "auto",
+                    }
+                );
+                return curr_selection;
             });
-            gsap.fromTo(svgTRightRef.current, {
-                x: -30, y: 30,
-                opacity: 0, duration: 0.4,
-                ease: "power3.out",
-                overwrite: "auto",
-            }, {
-                x: 30, y: -30,
-                opacity: 1, delay: 0.1,
-                ease: "power3.out",
-                overwrite: "auto",
-            });
-            gsap.fromTo(svgBLeftRef.current, {
-                x: 30, y: -30,
-                opacity: 0, duration: 0.4,
-                ease: "power3.out",
-                overwrite: "auto",
-            }, {
-                x: -30, y: 30,
-                opacity: 1, delay: 0.1,
-                ease: "power3.out",
-                overwrite: "auto",
-            });
-            gsap.fromTo(svgBRightRef.current, {
-                x: -30, y: -30,
-                opacity: 0, duration: 0.4,
-                ease: "power3.out",
-                overwrite: "auto",
-            }, {
-                x: 30, y: 30,
-                opacity: 1, delay: 0.1,
-                ease: "power3.out",
-                overwrite: "auto",
-            });
-
-            gsap.fromTo(imgRef.current[curr_selection], {
-                opacity: 0,
-                scale: 0.8,
-                ease: "power3.out",
-                duration: 0.3,
-                overwrite: "auto",
-            },
-                {
-                    scale: 1.05,
-                    delay: .1,
-                    ease: "power3.out",
-                    opacity: 1,
-                    overwrite: "auto",
-                }
-            );
-            return curr_selection;
         });
+        return () => ctx.revert();
     }, [curr_selection]);
 
     useEffect(() => {
@@ -191,7 +196,7 @@ const HeroTop = () => {
                 </div>
 
                 <div className='flex items-center gap-[1vw]'>
-                    <button className='uppercase border-2 bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
+                    <button className='uppercase border-2 cursor-pointer bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
                     <div ref={calPriceWidRef} className='overflow-hidden '>
                         <div ref={movePriceRef} className=' h-[3.5vw]' >
                             {burgerInfoContext.map((burgerInfo, index) => {

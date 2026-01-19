@@ -87,7 +87,7 @@ const Nav = () => {
     return (
         <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-2'>
             <div className='flex font-[font1] justify-between items-center w-[85vw]'>
-                <div className='flex items-center gap-2'>
+                <div className='flex ml-[0.5vw] items-center gap-2'>
                     <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[2.6vw]' />
                     <Link className='font-bold pt-1 text-[1.8vw] text-[#1D1E20]' href="/">Golden Bun</Link>
                 </div>

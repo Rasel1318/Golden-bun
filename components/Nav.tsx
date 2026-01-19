@@ -9,41 +9,80 @@ const Nav = () => {
     // Refs
     const homeRef = useRef(null), menuRef = useRef(null), storyRef = useRef(null), contactRef = useRef(null);
     const navRaf = useRef(null);
+    // Animations Refs
+    const HomeAnimateRef = useRef(null);
 
     let path = usePathname();
     const [pre_path, setPre_path] = useState(path);
-    
+
     // Animations
     useEffect(() => {
         const tl = gsap.timeline();
-        if(pre_path==='/'){
-            tl.to(homeRef.current,{backgroundColor:"transparent", color:"#505254"})
-        }else if(pre_path==='/menu'){
-            tl.to(menuRef.current,{backgroundColor:"transparent", color:"#505254"})
-        }else if(pre_path==='/ourstory'){
-            tl.to(storyRef.current,{backgroundColor:"transparent", color:"#505254"})
-        }else tl.to(contactRef.current,{backgroundColor:"transparent", color:"#505254"})
+        if (pre_path === '/') {
+            tl.to(homeRef.current, { backgroundColor: "transparent", color: "#505254" })
+        } else if (pre_path === '/menu') {
+            tl.to(menuRef.current, { backgroundColor: "transparent", color: "#505254" })
+        } else if (pre_path === '/ourstory') {
+            tl.to(storyRef.current, { backgroundColor: "transparent", color: "#505254" })
+        } else tl.to(contactRef.current, { backgroundColor: "transparent", color: "#505254" })
 
-        if(path==='/'){
-            tl.to(homeRef.current,{backgroundColor:"#FC9412", color:"#fcfcfa"})
-        }else if(path==='/menu'){
-            tl.to(menuRef.current,{backgroundColor:"#FC9412", color:"#fcfcfa"})
-        }else if(path==='/ourstory'){
-            tl.to(storyRef.current,{backgroundColor:"#FC9412", color:"#fcfcfa"})
-        }else tl.to(contactRef.current,{backgroundColor:"#FC9412", color:"#fcfcfa"})
-        
-        tl.to(homeRef.current,{
-            onComplete:()=>setPre_path(path)
-        })
+        if (path === '/') {
+            tl.to(homeRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
+        } else if (path === '/menu') {
+            tl.to(menuRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
+        } else if (path === '/ourstory') {
+            tl.to(storyRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
+        } else tl.to(contactRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
+
+        tl.to(homeRef.current, {
+            onComplete: () => setPre_path(path),
+        });
     }, [path])
 
-    useEffect(()=>{
+    useEffect(() => {
         gsap.from(navRaf.current, {
             y: -100,
-            opacity:0,
-            duration:0.4,
+            opacity: 0,
+            duration: 0.4,
         })
-    } ,[])
+    }, [])
+
+
+    useEffect(() => {
+        let delayed;
+        const animateHome = () => {
+            HomeAnimateRef.current = gsap.timeline();
+            HomeAnimateRef.current.to(menuRef.current, {
+                color: "transparent",
+                duration: 3,
+                backgroundPosition: "300% 0%",
+                overwrite: "auto",
+            })
+            HomeAnimateRef.current.to(menuRef.current, {
+                duration: 3,
+                backgroundPosition: "0% 0%",
+                overwrite: "auto",
+            })
+            delayed = gsap.delayedCall(7, animateHome);
+        }
+
+        if (path !== "/menu") {
+            const ele = menuRef.current;
+            ele.style.background = "linear-gradient(90deg,#505254,#505254,#00e0ff,#505254)";
+            ele.style.backgroundSize = "300% 100%";
+            ele.style.backgroundPosition = "0% 0%";
+            ele.style.setProperty('-webkit-background-clip', 'text');
+            ele.style.backgroundClip = "text";
+            ele.style.color = "transparent";
+            animateHome();
+        }
+        else {
+            HomeAnimateRef.current?.kill();
+            menuRef.current.style.background = "#505254";
+            menuRef.current.style.color = "#fcfcfa";
+        }
+        return () => delayed?.kill();
+    }, [path])
 
     return (
         <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-2'>
@@ -54,7 +93,7 @@ const Nav = () => {
                 </div>
                 <div className='flex items-center my-2 border-2 font-semibold rounded-full border-[#50525449]  text-[1.2vw] bg-[#fcfcfa]'>
                     <Link ref={homeRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/">Home</Link>
-                    <Link ref={menuRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/menu">Menu</Link>
+                    <Link ref={menuRef} className='z-1 px-[1vw] rounded-full' href="/menu">Menu</Link>
                     <Link ref={storyRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/ourstory">Our Story</Link>
                     <Link ref={contactRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/contact">Contact</Link>
                 </div>

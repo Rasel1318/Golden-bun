@@ -10,6 +10,17 @@
     src: url(/fonts/Baloo2-ExtraBold.woff);
 }
 
+/* Main menu overlay transition */
+.overlay-enter {
+    color: #fcfcfa;
+    transition: color 0.3s ease;
+}
+.overlay-out {
+    color: #505254;
+    transition: color 0.3s ease;
+}
+/* Main menu overlay transition end */
+
 .transition-grid {
     position: fixed;
     top: 0;

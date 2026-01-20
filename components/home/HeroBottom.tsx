@@ -83,7 +83,7 @@ const HeroBottom = () => {
         <div ref={calCardWidRef} className='overflow-hidden h-[8.5vw]'>
           <div ref={moveCardRef} className='flex flex-wrap' >
             {burgerInfoContext.map((burgerInfo, index) => {
-              return (<div key={index} ref={(e) => (cardsRef.current[index] = e)} onClick={() => cardClick(index)} className='flex z-2 cursor-pointer h-[8.1vw] justify-between w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
+              return (<div key={index} ref={(e) => (cardsRef.current[index] = e)} onClick={() => cardClick(index)} className='flex z-2 relative cursor-pointer h-[8.1vw] justify-between w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
                 <div className='ml-[1vw] flex items-center '>
                   <Image src={burgerInfo.img} className='w-[6vw] ' alt="Burger Imgae" loading="eager" width={585} height={530} />
                 </div>
@@ -94,9 +94,8 @@ const HeroBottom = () => {
                   </h1>
                   <p className='text-[#FC9412] text-[1.2vw]'>${burgerInfo.price}</p>
                 </div>
-                <div className='flex items-end'>
-                  <Image onClick={hello} className='w-[2vw] z-4 h-fit bg-[#FC9412] rounded-tl-[0.8vw]' src="/svg/plus.svg" loading="eager" alt="burger-logo" width={50} height={50} />
-                </div>
+                <div className='h-full w-[2vw]'/>
+                <Image onClick={hello} className=' absolute bottom-0 right-0 w-[2vw] z-4 h-fit bg-[#FC9412] rounded-tl-[0.8vw]' src="/svg/plus.svg" loading="eager" alt="burger-logo" width={50} height={50} />
               </div>)
             })}
           </div>

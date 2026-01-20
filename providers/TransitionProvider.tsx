@@ -1,6 +1,5 @@
 "use client";
 import gsap from "gsap";
-import next from "next";
 import { TransitionRouter } from "next-transition-router";
 import { useRef } from "react";
 
@@ -15,8 +14,6 @@ const TransitionProvider = ({children}) => {
         container.innerHTML = "";
         blockRef.current = [];
 
-        // const gridWidth = window.innerWidth;
-        // const gridHeight = window.innerHeight;
         const width = (window.innerWidth/5)+1;
 
         for(let col = 0; col<5; col++){

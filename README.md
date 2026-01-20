@@ -43,6 +43,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 #FFF8EE  -  background
 #FEE4C2  -  Optional-color
 
+#fcfcfa  -  Second Background
+
 
 
 

@@ -1,11 +1,13 @@
 "use client";
-import { createContext, useState } from 'react';
+import { act, createContext, useState } from 'react';
 import MenuLeft from '@/components/menu/MenuLeft'
 import MenuRight from '@/components/menu/MenuRight'
 
 const BurgerMenuContext = createContext();
 
 const page = () => {
+  const [activeSelection, setActiveSelection] = useState(0);
+  const [preActiveSelection, setPreActiveSelection] = useState(-1);
 
   const [MenuData, setMenuData] = useState([
     {
@@ -24,8 +26,23 @@ const page = () => {
       name: "Pizza",
       svg: "/svg/pizza.png",
     },
+    {
+      name: "French Fries",
+      svg: "/svg/french-fries.png",
+    },
+    {
+      name: "Cold-Drinks",
+      svg: "/svg/softdrink.png",
+    },
+    {
+      name: "Hot-Coffee",
+      svg: "/svg/coffee.png",
+    },
+    {
+      name: "Ice-Tea",
+      svg: "/svg/tea.png",
+    },
   ]);
-
 
   const [MenuItemData, setMenuItemData] = useState([
     [
@@ -62,11 +79,10 @@ const page = () => {
 
   return (
     <div className="w-full h-full pt-[7vh] flex items-center justify-center">
-      <div className="w-[85vw] h-[85vh] flex justify-between">
-        <BurgerMenuContext.Provider value={{MenuItemData, setMenuItemData, MenuData, setMenuData}}>
+      <div className="w-[85vw] max-h-[55vw]  rounded-[0.4vw] flex justify-between">
+        <BurgerMenuContext.Provider value={{ activeSelection, setActiveSelection,preActiveSelection, setPreActiveSelection, MenuItemData, MenuData }}>
           <MenuLeft />
           <MenuRight />
-
         </BurgerMenuContext.Provider>
       </div>
     </div>

@@ -63,7 +63,7 @@ const MenuLeft = () => {
     }
 
     return (
-        <div className="w-[15vw] h-full p-[0.5vw] overflow-auto font-[font1] ">
+        <div className="w-[15vw] h-full p-[0.5vw] overflow-auto font-[font1]">
             <h3 className="uppercase text-[0.95vw] text-[#737679] font-bold">Main Menu</h3>
             <div className="relative flex flex-wrap gap-[0.5vw] pt-[0.6vw]">
                 <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 rounded-[0.8vw] bg-[#FC9412]" />

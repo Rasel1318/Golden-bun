@@ -74,12 +74,33 @@ const page = () => {
         img: "/media/mushroom_melt_burger.png",
         rating: "★★★★★"
       },
-    ]
+      {
+        name: "Crispy Chicken Burger",
+        description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
+        price: 4.99,
+        img: "/media/crispy_chicken_burger.png",
+        rating: "★★★★★"
+      },
+      {
+        name: "Veggie Delight Burger",
+        description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
+        price: 3.99,
+        img: "/media/veggie_delight_burger.png",
+        rating: "★★★★★"
+      },
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
   ]);
 
   return (
     <div className="w-full h-full pt-[7vh] flex items-center justify-center">
-      <div className="w-[85vw] max-h-[55vw]  rounded-[0.4vw] flex justify-between">
+      <div className="w-[85vw] h-[85vh] max-h-[55vw] flex justify-between">
         <BurgerMenuContext.Provider value={{ activeSelection, setActiveSelection,preActiveSelection, setPreActiveSelection, MenuItemData, MenuData }}>
           <MenuLeft />
           <MenuRight />

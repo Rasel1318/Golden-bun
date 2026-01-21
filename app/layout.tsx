@@ -18,7 +18,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       name: "Old School/Cheese Burger",
       description: "Clissic beef, melted cheese, fresh toppings nostalgic flavor in a bun.",
       price: 5.99,
-      img: "/media/classic_cheeses.webp",
+      img: "/media/classic_cheeses.png",
       rating: "★★★★★"
     },
     {

@@ -21,7 +21,6 @@ const HeroBottom = () => {
     setCurr_selection(e);
   }
 
-
   // Animations
   useEffect(() => {
     const ctx = gsap.context(() => {

@@ -1,5 +1,5 @@
 "use client";
-import { act, createContext, useState } from 'react';
+import {  createContext, useState } from 'react';
 import MenuLeft from '@/components/menu/MenuLeft'
 import MenuRight from '@/components/menu/MenuRight'
 
@@ -51,10 +51,10 @@ const page = () => {
         name: "Old School Cheese Burger",
         description: "Clissic beef, melted cheese, fresh toppings nostalgic flavor in a bun.",
         price: 5.99,
-        img: "/media/classic_cheeses.png",
+        img: "/media/classic_cheeses.webp",
         rating: "★★★★★",
 
-        img2: "/full_images/media/classic_cheeses2.png",
+        img2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -65,7 +65,7 @@ const page = () => {
         img: "/media/double_beef.webp",
         rating: "★★★★★",
 
-        img2: "/full_images/media/classic_cheeses2.png",
+        img2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -73,10 +73,10 @@ const page = () => {
         name: "Ghost Pepper Burger",
         description: "Fiery beef patty with melted cheese and ghost pepper sauce for extreme heat lovers.",
         price: 5.99,
-        img: "/media/ghost_pepper_burger.png",
+        img: "/media/ghost_pepper_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -84,10 +84,10 @@ const page = () => {
         name: "Mushroom Melt Burger",
         description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
         price: 6.99,
-        img: "/media/mushroom_melt_burger.png",
+        img: "/media/mushroom_melt_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -95,10 +95,10 @@ const page = () => {
         name: "Crispy Chicken Burger",
         description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
         price: 4.99,
-        img: "/media/crispy_chicken_burger.png",
+        img: "/media/crispy_chicken_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -106,10 +106,10 @@ const page = () => {
         name: "Veggie Delight Burger",
         description: "Smooth, savory mushroom burger finished with Swiss cheese and a soft sesame bun.",
         price: 3.99,
-        img: "/media/veggie_delight_burger.png",
+        img: "/media/veggie_delight_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -119,10 +119,10 @@ const page = () => {
         name: "Grilled Beef Sub",
         description: "Juicy grilled beef layered with cheese, crisp vegetables, and toasted sub roll.",
         price: 4.99,
-        img: "/media/grilled_beef_sub.png",
+        img: "/media/grilled_beef_sub.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       }
@@ -133,10 +133,10 @@ const page = () => {
         name: "Chili Cheese Hot Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/chili_cheese_Hot_dog.png",
+        img: "/media/chili_cheese_Hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -144,10 +144,10 @@ const page = () => {
         name: "All-American Crunch Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/all_american_crunch_dog.png",
+        img: "/media/all_american_crunch_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -155,10 +155,10 @@ const page = () => {
         name: "Bacon-Wrapped Hot Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/bacon_wrapped_hot_dog.png",
+        img: "/media/bacon_wrapped_hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -166,10 +166,10 @@ const page = () => {
         name: "Nacho Cheese Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/nacho_cheese_dog.png",
+        img: "/media/nacho_cheese_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -177,10 +177,10 @@ const page = () => {
         name: "Spicy Sriracha Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/spicy_sriracha_dog.png",
+        img: "/media/spicy_sriracha_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -188,10 +188,10 @@ const page = () => {
         name: "Classic American Hot Dog",
         description: "A bold chili cheese hot dog packed with flavor in every bite.",
         price: 3.99,
-        img: "/media/classic_american_hot_dog.png",
+        img: "/media/classic_american_hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.png",
+        ima2: "/full_images/media/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },

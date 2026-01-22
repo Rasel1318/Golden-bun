@@ -54,7 +54,7 @@ const page = () => {
         img: "/media/classic_cheeses.webp",
         rating: "★★★★★",
 
-        img2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/classic_cheeses2.webp",
         quantity: 0,
         status: false,
       },
@@ -65,7 +65,7 @@ const page = () => {
         img: "/media/double_beef.webp",
         rating: "★★★★★",
 
-        img2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/double_beef2.png",
         quantity: 0,
         status: false,
       },
@@ -76,7 +76,7 @@ const page = () => {
         img: "/media/ghost_pepper_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/ghost_pepper_burger2.png",
         quantity: 0,
         status: false,
       },
@@ -87,7 +87,7 @@ const page = () => {
         img: "/media/mushroom_melt_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/mushroom_melt_burger2.png",
         quantity: 0,
         status: false,
       },
@@ -98,7 +98,7 @@ const page = () => {
         img: "/media/crispy_chicken_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/crispy_chicken_burger2.png",
         quantity: 0,
         status: false,
       },
@@ -109,7 +109,7 @@ const page = () => {
         img: "/media/veggie_delight_burger.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/veggie_delight_burger2.png",
         quantity: 0,
         status: false,
       },
@@ -122,7 +122,7 @@ const page = () => {
         img: "/media/grilled_beef_sub.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/grilled_beef_sub2.png",
         quantity: 0,
         status: false,
       }
@@ -136,7 +136,7 @@ const page = () => {
         img: "/media/chili_cheese_Hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/chili_cheese_Hot_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -147,7 +147,7 @@ const page = () => {
         img: "/media/all_american_crunch_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/all_american_crunch_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -158,7 +158,7 @@ const page = () => {
         img: "/media/bacon_wrapped_hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/bacon_wrapped_hot_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -169,7 +169,7 @@ const page = () => {
         img: "/media/nacho_cheese_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/nacho_cheese_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -180,7 +180,7 @@ const page = () => {
         img: "/media/spicy_sriracha_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/spicy_sriracha_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -191,7 +191,7 @@ const page = () => {
         img: "/media/classic_american_hot_dog.webp",
         rating: "★★★★★",
 
-        ima2: "/full_images/media/classic_cheeses2.webp",
+        img2: "/media/full_images/classic_american_hot_dog2.png",
         quantity: 0,
         status: false,
       },
@@ -205,7 +205,7 @@ const page = () => {
   return (
     <div className="w-full h-full pt-[7vh] flex items-center justify-center">
       <div className="w-[85vw] h-[85vh] max-h-[55vw] flex justify-between">
-        <BurgerMenuContext.Provider value={{ itemActive, setItemActive, menuActive, setMenuActive, preActiveSelection, setPreActiveSelection, MenuItemData, MenuData }}>
+        <BurgerMenuContext.Provider value={{ itemActive, setItemActive, menuActive, setMenuActive, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData }}>
           <MenuLeft />
           <MenuRight />
         </BurgerMenuContext.Provider>

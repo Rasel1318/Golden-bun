@@ -2,6 +2,7 @@
 import Image from 'next/image'
 import { useContext, useEffect, useRef } from 'react'
 import { burgerContext } from '@/app/layout';
+import Link from 'next/link';
 import gsap from 'gsap'
 const HeroBottom = () => {
   // Refs
@@ -12,11 +13,9 @@ const HeroBottom = () => {
   const RightSvgRef = useRef(null);
 
   // Context
-  const { curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = useContext(burgerContext);
+  const { callFromHome, setCallFromHome, indexTracing, setItemActive, setMenuActive, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = useContext(burgerContext);
 
-  const hello = () => {
-    console.log("Hello")
-  }
+  // Handlers / Functions
   const cardClick = (e) => {
     setCurr_selection(e);
   }
@@ -74,6 +73,11 @@ const HeroBottom = () => {
       return newSelection;
     })
   }
+  const linkWithMenu = (index) => {
+    setCallFromHome(true);
+    setMenuActive(indexTracing[index][0]);
+    setItemActive(indexTracing[index][1]);
+  }
 
   return (
     <div className='w-full h-[22%] font-[fontbold] flex'>
@@ -82,19 +86,20 @@ const HeroBottom = () => {
         <div ref={calCardWidRef} className='overflow-hidden h-[8.5vw]'>
           <div ref={moveCardRef} className='flex flex-wrap' >
             {burgerInfoContext.map((burgerInfo, index) => {
-              return (<div key={index} ref={(e) => (cardsRef.current[index] = e)} onClick={() => cardClick(index)} className='flex z-2 relative cursor-pointer h-[8.1vw] justify-between w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
+              return (<div key={index} ref={(e) => (cardsRef.current[index] = e)} onClick={() => cardClick(index)} className='flex z-2 relative cursor-pointer h-[8.1vw] justify-start w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
                 <div className='ml-[1vw] flex items-center '>
                   <Image src={burgerInfo.img} className='w-[6vw] ' alt="Burger Imgae" loading="eager" width={585} height={530} />
                 </div>
-                <div className='flex flex-col my-[0.4vw]'>
+                <div className='flex flex-col pl-[1vw] my-[0.4vw]'>
                   <p className='text-[#FC9412] text-[1.3vw]'>{burgerInfo.rating}</p>
                   <h1 className='text-[1.3vw] leading-[1.6vw]'>{burgerInfo.name.split("/").slice(0, 1)} <br />
                     {burgerInfo.name.split("/").slice(1)}
                   </h1>
                   <p className='text-[#FC9412] text-[1.2vw]'>${burgerInfo.price}</p>
                 </div>
-                <div className='h-full w-[2vw]'/>
-                <Image onClick={hello} className=' absolute bottom-0 right-0 w-[2vw] z-4 h-fit bg-[#FC9412] rounded-tl-[0.8vw]' src="/svg/plus.svg" loading="eager" alt="burger-logo" width={50} height={50} />
+                <Link onClick={()=>linkWithMenu(index)} href="/menu">
+                  <Image className=' absolute bottom-0 right-0 w-[2vw] z-4 h-fit bg-[#FC9412] rounded-tl-[0.8vw]' src="/svg/plus.svg" loading="eager" alt="burger-logo" width={50} height={50} />
+                </Link>
               </div>)
             })}
           </div>

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useContext, useEffect, useRef } from "react";
-import { BurgerMenuContext } from "@/app/menu/page";
+import { useContext, useEffect, useRef, useState } from "react";
+import { burgerContext } from "@/app/layout";
 import gsap from "gsap";
 
 const MenuLeft = () => {
@@ -13,14 +13,19 @@ const MenuLeft = () => {
     const menuTlRef = useRef<gsap.core.Timeline | null>(null);
 
     // Contexts
-    const { preActiveSelection, setPreActiveSelection, menuActive, setMenuActive, MenuData } = useContext(BurgerMenuContext);
+    const { menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, menuActive, setMenuActive, MenuData } = useContext(burgerContext);
 
     useEffect(() => {
         const ele = mainMenuRef.current[menuActive];
-        gsap.to(menuOverlayRef.current, {
-            y: ele.getBoundingClientRect().top - menuOverlayRef.current.getBoundingClientRect().top,
-            duration: "none",
-        });
+        if (!menuOverlyBool) {
+            gsap.to(menuOverlayRef.current, {
+                y: ele.getBoundingClientRect().top - menuOverlayRef.current.getBoundingClientRect().top,
+                duration: "none",
+                onComplete: () => {
+                    setMenuOverlyBool(true);    
+                }
+            });
+        }
         ele.querySelector("h3").classList.add("overlay-enter");
         menuOverlayRef.current.style.height = `${ele.getBoundingClientRect().height}px`;
         setPreActiveSelection(menuActive);

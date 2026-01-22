@@ -24,7 +24,7 @@ const Nav = () => {
             tl.to(menuRef.current, { backgroundColor: "transparent", color: "#505254" })
         } else if (pre_path === '/ourstory') {
             tl.to(storyRef.current, { backgroundColor: "transparent", color: "#505254" })
-        } else tl.to(contactRef.current, { backgroundColor: "transparent", color: "#505254" })
+        } else if(pre_path === '/contact') tl.to(contactRef.current, { backgroundColor: "transparent", color: "#505254" })
 
         if (path === '/') {
             tl.to(homeRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
@@ -32,7 +32,7 @@ const Nav = () => {
             tl.to(menuRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
         } else if (path === '/ourstory') {
             tl.to(storyRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
-        } else tl.to(contactRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
+        } else if(path === '/contact') tl.to(contactRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
 
         tl.to(homeRef.current, {
             onComplete: () => setPre_path(path),
@@ -100,7 +100,9 @@ const Nav = () => {
                 <div className='flex gap-[1vw] justify-center items-center w-[10vw] h-full '>
                     <Image className='w-[2vw] bg-[#fcfcfa] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/search-line.svg" alt="burger-logo" width={50} height={50} />
                     <Image className='w-[2vw] bg-[#fcfcfa] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/heart-line.svg" alt="burger-logo" width={50} height={50} />
+                    <Link href="/checkout">
                     <Image className='w-[2vw] bg-[#fcfcfa] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/shopping-bag-line.svg" alt="burger-logo" width={50} height={50} />
+                    </Link>
                 </div>
             </div>
         </div>

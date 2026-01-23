@@ -12,7 +12,7 @@ const Nav = () => {
     // Animations Refs
     const HomeAnimateRef = useRef(null);
 
-    let path = usePathname();
+    const path = usePathname();
     const [pre_path, setPre_path] = useState(path);
 
     // Animations
@@ -87,10 +87,10 @@ const Nav = () => {
     return (
         <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-2'>
             <div className='flex font-[font1] justify-between items-center w-[85vw]'>
-                <div className='flex ml-[0.5vw] items-center gap-2'>
+                <Link href="/" className='flex ml-[0.5vw] items-center gap-2'>
                     <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[2.6vw]' />
-                    <Link className='font-bold pt-1 text-[1.8vw] text-[#1D1E20]' href="/">Golden Bun</Link>
-                </div>
+                    <h1 className='font-bold pt-1 text-[1.8vw] text-[#1D1E20]' href="/">Golden Bun</h1>
+                </Link>
                 <div className='flex items-center my-2 border-2 font-semibold rounded-full border-[#50525449]  text-[1.2vw] bg-[#fcfcfa]'>
                     <Link ref={homeRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/">Home</Link>
                     <Link ref={menuRef} className='z-1 px-[1vw] rounded-full' href="/menu">Menu</Link>

@@ -4,7 +4,6 @@ import "./globals.css";
 import { createContext, useState } from "react";
 import TransitionProvider from "@/providers/TransitionProvider";
 
-
 const burgerContext = createContext();
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
@@ -56,6 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/classic_cheeses2.webp",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
       {
         name: "Double Beef Bacon Burger",
@@ -67,6 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/double_beef2.png",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
       {
         name: "Ghost Pepper Burger",
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/ghost_pepper_burger2.png",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
       {
         name: "Mushroom Melt Burger",
@@ -89,6 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/mushroom_melt_burger2.png",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
       {
         name: "Crispy Chicken Burger",
@@ -100,6 +103,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/crispy_chicken_burger2.png",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
       {
         name: "Veggie Delight Burger",
@@ -111,6 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/veggie_delight_burger2.png",
         quantity: 0,
         status: false,
+        menuInd:0,
       },
     ],
     [
@@ -124,6 +129,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/grilled_beef_sub2.png",
         quantity: 0,
         status: false,
+        menuInd:1,
       }
     ],
     [],
@@ -138,6 +144,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/chili_cheese_Hot_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3,
       },
       {
         name: "All-American Crunch Dog",
@@ -149,6 +156,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/all_american_crunch_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3
       },
       {
         name: "Bacon-Wrapped Hot Dog",
@@ -160,6 +168,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/bacon_wrapped_hot_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3
       },
       {
         name: "Nacho Cheese Dog",
@@ -171,6 +180,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/nacho_cheese_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3
       },
       {
         name: "Spicy Sriracha Dog",
@@ -182,6 +192,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/spicy_sriracha_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3
       },
       {
         name: "Classic American Hot Dog",
@@ -193,6 +204,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/classic_american_hot_dog2.png",
         quantity: 0,
         status: false,
+        menuInd:3
       },
     ],
     [],

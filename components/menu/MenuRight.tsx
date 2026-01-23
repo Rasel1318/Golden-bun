@@ -23,6 +23,7 @@ const MenuRight = () => {
     img2: string,
     quantity: number,
     status: boolean,
+    menuInd: number,
   };
 
   const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
@@ -34,16 +35,16 @@ const MenuRight = () => {
 
   // Handelers / Functions
   const cardClickHandler = (index) => {
-    if(index !== itemActive) setItem(MenuItemData[menuActive][index] ?? null);
+    if (index !== itemActive) setItem(MenuItemData[menuActive][index] ?? null);
   };
   const cardCartIconClick = (index) => {
-    if(index===itemActive){
+    if (index === itemActive) {
       setStatus(true);
-      if(quantity===0) setQuantity(1);
+      if (quantity === 0) setQuantity(1);
     }
     setMenuItemData((prev) => {
-      return prev.map((menu, mIndex) =>
-        (mIndex === menuActive) ?
+      return prev.map((menu, pindex) =>
+        (pindex === menuActive) ?
           menu.map((item, idx) => {
             if (idx === index) {
               const q: boolean = item.quantity === 0;
@@ -55,6 +56,18 @@ const MenuRight = () => {
           : menu
       );
     });
+    setCheckoutData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
+      if (exist) return prev.map((item) =>
+        item.name === MenuItemData[menuActive][index].name
+          ? { ...item, quantity: (item.quantity !== 0) ? quantity : 1, status: true }
+          : item
+      )
+      const data = MenuItemData[menuActive][index];
+      data.quantity = (data.quantity !== 0) ? data.quantity : 1;
+      data.status = true;
+      return [...prev, data];
+    })
   }
   const cartBtnHandler = () => {
     const ctx = gsap.context(() => {
@@ -73,21 +86,30 @@ const MenuRight = () => {
       return prev.map((menu, index) =>
         (index === menuActive) ?
           menu.map((item, idx) => {
-            if (idx === itemActive) {
-              const q: boolean = item.quantity === 0;
-              if (q) return { ...item, quantity: 1, status: true };
-              return { ...item, status: true };
-            }
+            if (idx === itemActive)
+              return { ...item, quantity: (item.quantity !== 0) ? quantity : 1, status: true };
             return item;
           })
           : menu
       )
     });
+    setCheckoutData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item) =>
+        item.name === MenuItemData[menuActive][itemActive].name
+          ? { ...item, quantity: (item.quantity !== 0) ? quantity : 1, status: true }
+          : item
+      )
+      const data = MenuItemData[menuActive][itemActive];
+      data.quantity = (data.quantity !== 0) ? data.quantity : 1;
+      data.status = true;
+      return [...prev, data];
+    })
     return () => ctx.revert();
   };
 
 
-  const quantityMinusHandler = () => {
+  const quantityMinusHandler = (name: string) => {
     setQuantity(prev => {
       const q: number = Math.max(prev - 1, 0);
       if (!q) {
@@ -117,6 +139,20 @@ const MenuRight = () => {
           : menu
       )
     );
+    setCheckoutData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item) =>
+        item.name === MenuItemData[menuActive][itemActive].name
+          ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
+          : item
+      )
+      return [...prev, MenuItemData[menuActive][itemActive]];
+    })
+    setCheckoutData((prev) =>
+      prev.filter(
+        (item) => !(item.name === name && item.quantity === 0)
+      )
+    );
   };
   const quantityPlusHandler = () => {
     setQuantity(prev => prev + 1);
@@ -131,6 +167,18 @@ const MenuRight = () => {
           : menu
       )
     });
+    setCheckoutData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item) =>
+        item.name === MenuItemData[menuActive][itemActive].name
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      )
+      const data = MenuItemData[menuActive][itemActive];
+      data.quantity = (data.quantity !== 0) ? data.quantity : 1;
+      data.status = true;
+      return [...prev, data];
+    })
   };
 
   // Animations
@@ -245,7 +293,7 @@ const MenuRight = () => {
 
             <div className="w-full mb-1 h-fit flex justify-between mt-auto">
               <div className="flex items-center justify-between w-[30%] gap-[1vw]">
-                <Image onClick={() => quantityMinusHandler()} className='active:scale-95 transition-transform bottom-[16%] right-[12%] w-[1.8vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/minus.svg" loading="eager" alt="quantity minus" width={50} height={50} />
+                <Image onClick={() => quantityMinusHandler(item.name)} className='active:scale-95 transition-transform bottom-[16%] right-[12%] w-[1.8vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/minus.svg" loading="eager" alt="quantity minus" width={50} height={50} />
                 <p className="font-bold  text-[1.5vw]">{quantity}</p>
                 <Image onClick={() => quantityPlusHandler()} className='active:scale-95 transition-transform bottom-[16%] right-[12%] w-[1.8vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/plus.svg" loading="eager" alt="quantity plus" width={50} height={50} />
               </div>

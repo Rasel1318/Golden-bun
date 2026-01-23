@@ -45,31 +45,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 #fcfcfa  -  Second Background
 
-const [MenuItemData, setMenuItemData] = useState([
-    {
-        name: "Old School Cheese Burger",
-        description: "Clissic beef, melted cheese, fresh toppings nostalgic flavor in a bun.",
-        price: 5.99,
-        img: "/media/classic_cheeses.webp",
-        rating: "★★★★★",
-
-        img2: "/full_images/media/classic_cheeses2.webp",
-        quantity: 0,
-        status: false,
-    },
-    {
-        name: "Double Beef Bacon Burger",
-        description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
-        price: 7.99,
-        img: "/media/double_beef.webp",
-        rating: "★★★★★",
-
-        img2: "/full_images/media/classic_cheeses2.webp",
-        quantity: 0,
-        status: false,
-    },
-  ])
-
 
 
 

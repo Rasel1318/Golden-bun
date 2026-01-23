@@ -256,6 +256,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     [3, 0],
   ])
 
+  // CheckOut Data Context Page
+  const [checkoutData, setCheckoutData] = useState([]);
 
   // Menu Page Context States
 
@@ -263,7 +265,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const [menuActive, setMenuActive] = useState(0);
   const [itemActive, setItemActive] = useState(0);
   const [preActiveSelection, setPreActiveSelection] = useState(-1);
-  
+
   // Home to Menu Linking states for selecting item directly
   const [callFromHome, setCallFromHome] = useState(false);
 
@@ -278,7 +280,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className="w-screen h-screen bg-[#FFF8EE]">
         <TransitionProvider>
           <Nav />
-          <burgerContext.Provider value={{indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
+          <burgerContext.Provider value={{ checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
             {children}
           </burgerContext.Provider>
         </TransitionProvider>

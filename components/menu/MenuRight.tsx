@@ -9,7 +9,7 @@ import Link from "next/link";
 const MenuRight = () => {
 
   // Context
-  const { callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const { checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
 
   // State
   const [quantity, setQuantity] = useState(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
@@ -25,7 +25,6 @@ const MenuRight = () => {
     status: boolean,
   };
 
-  console.log(menuActive, itemActive);
   const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
   const ItemDisRef = useRef([]);
   const cardRef = useRef([]);
@@ -35,9 +34,28 @@ const MenuRight = () => {
 
   // Handelers / Functions
   const cardClickHandler = (index) => {
-    // console.log("hello parent");
-    setItem(MenuItemData[menuActive][index] ?? null);
+    if(index !== itemActive) setItem(MenuItemData[menuActive][index] ?? null);
   };
+  const cardCartIconClick = (index) => {
+    if(index===itemActive){
+      setStatus(true);
+      if(quantity===0) setQuantity(1);
+    }
+    setMenuItemData((prev) => {
+      return prev.map((menu, mIndex) =>
+        (mIndex === menuActive) ?
+          menu.map((item, idx) => {
+            if (idx === index) {
+              const q: boolean = item.quantity === 0;
+              if (q) return { ...item, quantity: 1, status: true };
+              return { ...item, status: true };
+            }
+            return item;
+          })
+          : menu
+      );
+    });
+  }
   const cartBtnHandler = () => {
     const ctx = gsap.context(() => {
       gsap.to(addCartRef.current, {
@@ -150,7 +168,7 @@ const MenuRight = () => {
     if (!callFromHome) {
       setItemActive(0);
       setItem(MenuItemData[menuActive][0] ?? null);
-    }else {
+    } else {
       setItem(MenuItemData[menuActive][itemActive] ?? null);
     }
     setCallFromHome(false);
@@ -196,7 +214,7 @@ const MenuRight = () => {
           return (<div key={index} onClick={() => { setItemActive(index); cardClickHandler(index) }} ref={(e) => (cardRef.current[index] = e)} className="relative w-[45%] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
             <div className="w-[13vw] h-[9vw] z-1 rounded-full absolute top-[-9.5vw] left-[12.5%] bg-[#fc9312d6] blur-[2vw]" />
             <Image src={item.img} className='absolute top-[-12vw] left-[2%] w-[15vw] z-2' alt="Burger Imgae" loading="eager" width={585} height={530} />
-            <Image onClick={()=>hello()} className=' absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/plus.svg" loading="eager" alt="Add Cart" width={50} height={50} />
+            <Image onClick={() => cardCartIconClick(index)} className=' absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/plus.svg" loading="eager" alt="Add Cart" width={50} height={50} />
             <h1 className="font-[fontBold] text-[1.2vw]">{item.name}</h1>
             <p className="text-[#FC9412] text-[1.3vw]">{item.rating}</p>
             <p className="text-[#FC9412] font-[fontBold] text-[1.2vw]">${item.price}</p>

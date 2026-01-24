@@ -55,7 +55,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/classic_cheeses2.webp",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
       {
         name: "Double Beef Bacon Burger",
@@ -67,7 +67,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/double_beef2.png",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
       {
         name: "Ghost Pepper Burger",
@@ -79,7 +79,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/ghost_pepper_burger2.png",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
       {
         name: "Mushroom Melt Burger",
@@ -91,7 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/mushroom_melt_burger2.png",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
       {
         name: "Crispy Chicken Burger",
@@ -103,7 +103,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/crispy_chicken_burger2.png",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
       {
         name: "Veggie Delight Burger",
@@ -115,7 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/veggie_delight_burger2.png",
         quantity: 0,
         status: false,
-        menuInd:0,
+        menuInd: 0,
       },
     ],
     [
@@ -129,7 +129,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/grilled_beef_sub2.png",
         quantity: 0,
         status: false,
-        menuInd:1,
+        menuInd: 1,
       }
     ],
     [],
@@ -144,7 +144,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/chili_cheese_Hot_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3,
+        menuInd: 3,
       },
       {
         name: "All-American Crunch Dog",
@@ -156,7 +156,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/all_american_crunch_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3
+        menuInd: 3
       },
       {
         name: "Bacon-Wrapped Hot Dog",
@@ -168,7 +168,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/bacon_wrapped_hot_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3
+        menuInd: 3
       },
       {
         name: "Nacho Cheese Dog",
@@ -180,7 +180,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/nacho_cheese_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3
+        menuInd: 3
       },
       {
         name: "Spicy Sriracha Dog",
@@ -192,7 +192,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/spicy_sriracha_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3
+        menuInd: 3
       },
       {
         name: "Classic American Hot Dog",
@@ -204,7 +204,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/classic_american_hot_dog2.png",
         quantity: 0,
         status: false,
-        menuInd:3
+        menuInd: 3
       },
     ],
     [],
@@ -272,7 +272,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const [checkoutData, setCheckoutData] = useState([]);
 
   // Menu Page Context States
-
   const [menuOverlyBool, setMenuOverlyBool] = useState(false);
   const [menuActive, setMenuActive] = useState(0);
   const [itemActive, setItemActive] = useState(0);
@@ -291,8 +290,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className="w-screen h-screen bg-[#FFF8EE]">
         <TransitionProvider>
-          <Nav />
           <burgerContext.Provider value={{ checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
+            <Nav />
             {children}
           </burgerContext.Provider>
         </TransitionProvider>

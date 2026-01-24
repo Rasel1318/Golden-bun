@@ -17,17 +17,17 @@ const MenuLeft = () => {
 
     useEffect(() => {
         const ele = mainMenuRef.current[menuActive];
-        if (!menuOverlyBool) {
-            gsap.to(menuOverlayRef.current, {
-                y: ele.getBoundingClientRect().top - menuOverlayRef.current.getBoundingClientRect().top,
-                duration: "none",
-                onComplete: () => {
-                    setMenuOverlyBool(true);    
-                }
-            });
-        }
+        // if (!menuOverlyBool) {
+        //     gsap.to(menuOverlayRef.current, {
+        //         y: ele.getBoundingClientRect().top - menuOverlayRef.current.getBoundingClientRect().top,
+        //         duration: "none",
+        //         onComplete: () => {
+        //             setMenuOverlyBool(true);
+        //         }
+        //     });
+        // }
         ele.querySelector("h3").classList.add("overlay-enter");
-        menuOverlayRef.current.style.height = `${ele.getBoundingClientRect().height}px`;
+        // menuOverlayRef.current.style.height = `${ele.getBoundingClientRect().height}px`;
         setPreActiveSelection(menuActive);
     }, []);
 
@@ -69,9 +69,15 @@ const MenuLeft = () => {
 
     return (
         <div className="w-[15vw] h-full p-[0.5vw] overflow-auto no-scrollbar font-[font1]">
-            <h3 className="uppercase text-[0.95vw] text-[#737679] font-bold">Main Menu</h3>
-            <div className="relative flex flex-wrap gap-[0.5vw] pt-[0.6vw]">
-                <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 rounded-[0.8vw] bg-[#FC9412]" />
+            <h3 className="uppercase text-[0.95vw] text-[#737679] font-bold pt-[0.6vw]">Main Menu</h3>
+            <div className="relative flex flex-wrap gap-[0.5vw] ">
+
+                {/* work here */}
+                <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 rounded-[0.8vw] bg-[#FC9412]" >
+                    <div className="w-full p-[0.5vw] rounded-[0.8vw]">
+                        <div className="w-[2.8vw] h-[2.8vw] p-[0.4vw]" />
+                    </div>
+                </div>
                 {MenuData.slice(0, 5).map((item, index) => {
                     return (<div key={index} onClick={() => mainMenuClickHandler(index)} ref={(el) => (mainMenuRef.current[index] = el)} className="flex z-1 w-full cursor-pointer grow-0 shrink-0 items-center p-[0.5vw] rounded-[0.8vw] gap-[1vw] border-2 border-[#d5dce249] ">
                         <div className="bg-[#fce0b6] rounded-[0.4vw]">

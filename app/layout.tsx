@@ -56,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
       {
         name: "Double Beef Bacon Burger",
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
       {
         name: "Ghost Pepper Burger",
@@ -80,6 +82,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
       {
         name: "Mushroom Melt Burger",
@@ -92,6 +95,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
       {
         name: "Crispy Chicken Burger",
@@ -104,6 +108,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
       {
         name: "Veggie Delight Burger",
@@ -116,6 +121,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 0,
+        fev: false,
       },
     ],
     [
@@ -130,6 +136,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 1,
+        fev: false,
       }
     ],
     [],
@@ -145,6 +152,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         quantity: 0,
         status: false,
         menuInd: 3,
+        fev: false,
       },
       {
         name: "All-American Crunch Dog",
@@ -156,7 +164,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/all_american_crunch_dog2.png",
         quantity: 0,
         status: false,
-        menuInd: 3
+        menuInd: 3,
+        fev: false,
       },
       {
         name: "Bacon-Wrapped Hot Dog",
@@ -168,7 +177,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/bacon_wrapped_hot_dog2.png",
         quantity: 0,
         status: false,
-        menuInd: 3
+        menuInd: 3,
+        fev: false,
       },
       {
         name: "Nacho Cheese Dog",
@@ -180,7 +190,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/nacho_cheese_dog2.png",
         quantity: 0,
         status: false,
-        menuInd: 3
+        menuInd: 3,
+        fev: false,
       },
       {
         name: "Spicy Sriracha Dog",
@@ -192,7 +203,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/spicy_sriracha_dog2.png",
         quantity: 0,
         status: false,
-        menuInd: 3
+        menuInd: 3,
+        fev: false,
       },
       {
         name: "Classic American Hot Dog",
@@ -204,7 +216,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         img2: "/media/full_images/classic_american_hot_dog2.png",
         quantity: 0,
         status: false,
-        menuInd: 3
+        menuInd: 3,
+        fev: false,
       },
     ],
     [],
@@ -268,8 +281,51 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     [3, 0],
   ])
 
-  // CheckOut Data Context Page
+  // CheckOut Data for checkOut Page
   const [checkoutData, setCheckoutData] = useState([]);
+
+  // Favorite Data for favorite Page
+  const [favoriteData, setFavoriteData] = useState([
+    {
+      name: "Old School Cheese Burger",
+      description: "Clissic beef, melted cheese, fresh toppings nostalgic flavor in a bun.",
+      price: 5.99,
+      img: "/media/classic_cheeses.webp",
+      rating: "★★★★★",
+
+      img2: "/media/full_images/classic_cheeses2.webp",
+      quantity: 0,
+      status: false,
+      menuInd: 0,
+      fev: false,
+    },
+    {
+      name: "Double Beef Bacon Burger",
+      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
+      price: 7.99,
+      img: "/media/double_beef.webp",
+      rating: "★★★★★",
+
+      img2: "/media/full_images/double_beef2.png",
+      quantity: 0,
+      status: false,
+      menuInd: 0,
+      fev: false,
+    },
+    {
+      name: "Ghost Pepper Burger",
+      description: "Fiery beef patty with melted cheese and ghost pepper sauce for extreme heat lovers.",
+      price: 5.99,
+      img: "/media/ghost_pepper_burger.webp",
+      rating: "★★★★★",
+
+      img2: "/media/full_images/ghost_pepper_burger2.png",
+      quantity: 0,
+      status: false,
+      menuInd: 0,
+      fev: false,
+    },
+  ]);
 
   // Menu Page Context States
   const [menuOverlyBool, setMenuOverlyBool] = useState(false);
@@ -280,7 +336,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   // Home to Menu Linking states for selecting item directly
   const [callFromHome, setCallFromHome] = useState(false);
 
-
   // Home Page Context States
   const [curr_selection, setCurr_selection] = useState(0);
   const [curr_card, setCurr_card] = useState(0);
@@ -290,7 +345,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className="w-screen h-screen bg-[#FFF8EE]">
         <TransitionProvider>
-          <burgerContext.Provider value={{ checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
+          <burgerContext.Provider value={{ favoriteData, setFavoriteData, checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
             <Nav />
             {children}
           </burgerContext.Provider>

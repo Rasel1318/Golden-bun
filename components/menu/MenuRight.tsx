@@ -9,7 +9,7 @@ import Link from "next/link";
 const MenuRight = () => {
 
   // Context
-  const { checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const { favoriteData, setFavoriteData, checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
 
   // State
   const [quantity, setQuantity] = useState(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
@@ -24,6 +24,7 @@ const MenuRight = () => {
     quantity: number,
     status: boolean,
     menuInd: number,
+    fev: boolean,
   };
 
   const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
@@ -32,6 +33,7 @@ const MenuRight = () => {
   const cardParentRef = useRef(null);
   const checkOutRef = useRef(null);
   const addCartRef = useRef(null);
+  const fevRedRef = useRef([]);
 
   // Handelers / Functions
   const cardClickHandler = (index) => {
@@ -181,6 +183,32 @@ const MenuRight = () => {
     })
   };
 
+  const addFev = (index: number) => {
+    setMenuItemData((prev) => {
+      return prev.map((menu, pindex) =>
+        (pindex === menuActive) ?
+          menu.map((item, idx) => {
+            if (idx === index) {
+              return { ...item, fev: true };
+            }
+            return item;
+          })
+          : menu
+      );
+    });
+    setFavoriteData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
+      if (exist) return prev.map((item) =>
+        item.name === MenuItemData[menuActive][index].name
+          ? { ...item, fev: true }
+          : item
+      )
+      const data = MenuItemData[menuActive][index];
+      data.fev = true;
+      return [...prev, data];
+    })
+  }
+
   // Animations
   useEffect(() => {
     if (status) {
@@ -251,10 +279,6 @@ const MenuRight = () => {
     return () => ctx.revert();
   }, [itemActive, menuActive, item]);
 
-  // const hello = ()=>{
-  //   console.log("hello");
-  // }
-
   return (
     <div className="w-[69vw] h-full flex justify-evenly">
       <div ref={cardParentRef} className='w-[38vw] h-full flex flex-wrap justify-center font-[font1] overflow-auto no-scrollbar'>
@@ -262,6 +286,14 @@ const MenuRight = () => {
           return (<div key={index} onClick={() => { setItemActive(index); cardClickHandler(index) }} ref={(e) => (cardRef.current[index] = e)} className="relative w-[45%] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
             <div className="w-[13vw] h-[9vw] z-1 rounded-full absolute top-[-9.5vw] left-[12.5%] bg-[#fc9312d6] blur-[2vw]" />
             <Image src={item.img} className='absolute top-[-12vw] left-[2%] w-[15vw] z-2' alt="Burger Imgae" loading="eager" width={585} height={530} />
+            {(item.fev)
+              ? <div className="absolute top-[-12vw] left-[2%] w-[15vw] z-3">
+                <svg className="w-[2vw] p-[0.34vw] rounded-full border border-[#50525449]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,90,0,1"><path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853Z"></path></svg>
+              </div>
+              : <div onClick={() => addFev(index)} className="absolute top-[-12vw] left-[2%] w-[15vw] z-2">
+                <Image className='w-[2vw] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/heart-line.svg" alt="burger-logo" width={50} height={50} />
+              </div>
+            }
             <Image onClick={() => cardCartIconClick(index)} className=' absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/plus.svg" loading="eager" alt="Add Cart" width={50} height={50} />
             <h1 className="font-[fontBold] text-[1.2vw]">{item.name}</h1>
             <p className="text-[#FC9412] text-[1.3vw]">{item.rating}</p>

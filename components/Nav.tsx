@@ -31,10 +31,10 @@ const Nav = () => {
         } else if (pre_path === '/contact') {
             tl.to(contactRef.current, { backgroundColor: "transparent", color: "#505254" })
         } else if (pre_path === '/checkout') {
-            tl.to(checkOutRef.current, { backgroundColor: "transparent", color: "#505254" })
+            tl.to(checkOutRef.current, { backgroundColor: "#fcfcfa", color: "#505254" })
             if (cartCountRef.current) tl.to(cartCountRef.current, { backgroundColor: "#FC9412" })
         }else if (pre_path === '/favorite') {
-            tl.to(favoriteRef.current, { backgroundColor: "transparent", color: "#505254" })
+            tl.to(favoriteRef.current, { backgroundColor: "#fcfcfa", color: "#505254" })
         }
 
         if (path === '/') {

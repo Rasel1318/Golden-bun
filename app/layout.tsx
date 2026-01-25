@@ -285,47 +285,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const [checkoutData, setCheckoutData] = useState([]);
 
   // Favorite Data for favorite Page
-  const [favoriteData, setFavoriteData] = useState([
-    {
-      name: "Old School Cheese Burger",
-      description: "Clissic beef, melted cheese, fresh toppings nostalgic flavor in a bun.",
-      price: 5.99,
-      img: "/media/classic_cheeses.webp",
-      rating: "★★★★★",
-
-      img2: "/media/full_images/classic_cheeses2.webp",
-      quantity: 0,
-      status: false,
-      menuInd: 0,
-      fev: false,
-    },
-    {
-      name: "Double Beef Bacon Burger",
-      description: "Juicy beef patties stacked with crispy bacon in every savory bite.",
-      price: 7.99,
-      img: "/media/double_beef.webp",
-      rating: "★★★★★",
-
-      img2: "/media/full_images/double_beef2.png",
-      quantity: 0,
-      status: false,
-      menuInd: 0,
-      fev: false,
-    },
-    {
-      name: "Ghost Pepper Burger",
-      description: "Fiery beef patty with melted cheese and ghost pepper sauce for extreme heat lovers.",
-      price: 5.99,
-      img: "/media/ghost_pepper_burger.webp",
-      rating: "★★★★★",
-
-      img2: "/media/full_images/ghost_pepper_burger2.png",
-      quantity: 0,
-      status: false,
-      menuInd: 0,
-      fev: false,
-    },
-  ]);
+  const [favoriteData, setFavoriteData] = useState([]);
 
   // Menu Page Context States
   const [menuOverlyBool, setMenuOverlyBool] = useState(false);

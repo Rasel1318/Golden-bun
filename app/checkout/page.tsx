@@ -217,7 +217,6 @@ const Page = () => {
                 <input className="mt-[0.5vw] w-full h-[10%] rounded-[0.5vw] border border-gray-200 bg-gray-50 px-[0.5vw] py-[0.5vw] text-[0.8vw] font-bold text-[#505254] outline-none focus:border-amber-400" />
               </div>
 
-              {/* work here */}
               <div className="w-full">
                 <p className="text-[0.8vw] font-medium text-[#505254]">Card Number:</p>
                 <div className="flex justify-between">

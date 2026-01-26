@@ -11,7 +11,7 @@ gsap.registerPlugin(MorphSVGPlugin);
 const MenuRight = () => {
 
   // Context
-  const { favoriteData, setFavoriteData, checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const { navToMenu, setNavToMenu, favoriteData, setFavoriteData, checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
 
   // State
   const [quantity, setQuantity] = useState(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
@@ -36,7 +36,6 @@ const MenuRight = () => {
   const cardParentRef = useRef(null);
   const checkOutRef = useRef(null);
   const addCartRef = useRef(null);
-
 
   // Handelers / Functions
   const cardClickHandler = (index) => {
@@ -289,6 +288,11 @@ const MenuRight = () => {
   }, [menuActive]);
 
   useEffect(() => {
+    if(navToMenu){
+      setItem(MenuItemData[menuActive][itemActive] ?? null);
+      setNavToMenu(false);
+    }
+
     setQuantity(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
     setStatus(MenuItemData?.[menuActive]?.[itemActive]?.status ?? false);
     if (!item || !ItemDisRef.current) return;

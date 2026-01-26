@@ -6,17 +6,18 @@ import { usePathname } from 'next/navigation'
 import { burgerContext } from '@/app/layout';
 import { useContext, useEffect, useRef, useState } from 'react';
 
-
 const Nav = () => {
     // Refs
     const homeRef = useRef(null), menuRef = useRef(null), storyRef = useRef(null), contactRef = useRef(null), checkOutRef = useRef(null), favoriteRef = useRef(null);
     const navRaf = useRef(null);
     const cartCountRef = useRef(null);
-    const serachInputRef = useRef(null);
+    const searchInputRef = useRef(null);
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+
 
     // Animations Refs
     const HomeAnimateRef = useRef(null);
-    const { checkoutData, MenuItemData } = useContext(burgerContext);
+    const { navToMenu, setNavToMenu, checkoutData, MenuItemData, setMenuActive, setItemActive, setCallFromHome, preActiveSelection, setPreActiveSelection } = useContext(burgerContext);
 
     // States
     const path = usePathname();
@@ -29,16 +30,32 @@ const Nav = () => {
         )
     }) : [];
 
+    // Functions
+    function truncateWords(text: string, maxWords = 7) {
+        const words = text.trim().split(/\s+/);
+        if (words.length <= maxWords) return text;
+        return words.slice(0, maxWords).join(" ") + "...";
+    }
+    const searchItemClick = (item) => {
+        if(preActiveSelection === -1) setPreActiveSelection(item.menuInd);
+        setMenuActive(item.menuInd);
+        setCallFromHome(()=>true);
+        const ind = MenuItemData?.[item.menuInd].findIndex(it => it.name===item.name);
+        setItemActive(()=>ind);
+        setNavToMenu(true);
+        setFocused(false);
+    }
+
     // Animations
     useEffect(() => {
         if (focused) {
-            gsap.to(serachInputRef.current, {
+            gsap.to(searchInputRef.current, {
                 width: "20vw",
                 duration: 0.3,
                 overwrite: "auto",
             })
         } else {
-            gsap.to(serachInputRef.current, {
+            gsap.to(searchInputRef.current, {
                 width: 0,
                 duration: 0.3,
                 overwrite: "auto",
@@ -140,8 +157,19 @@ const Nav = () => {
         return () => ctx.revert();
     }, [checkoutData.length])
 
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) {
+                setFocused(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [focused]);
+
     return (
-        <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-2'>
+        <div ref={navRaf} className='fixed top-[3vh] left-[7.5vw] z-7'>
             <div className='flex font-[font1] justify-between items-center w-[85vw]'>
                 <Link href="/" className='flex ml-[0.5vw] items-center gap-2'>
                     <Image src="/svg/burgerlogo.svg" loading="eager" alt="burger-logo" width={50} height={50} className='w-[2.6vw]' />
@@ -154,19 +182,30 @@ const Nav = () => {
                     <Link ref={contactRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/contact">Contact</Link>
                 </div>
                 <div className='flex gap-[1vw] justify-center items-center w-fit h-full'>
-                    <div className='relative h-full flex justify-between items-center bg-[#fcfcfa] rounded-full border border-[#50525449]'>
-                        <Image onClick={() => serachInputRef.current?.focus()} className='w-[2vw]  p-[0.35vw] ' src="/svg/search-line.svg" alt="search logo" width={50} height={50} />
-                        <input ref={serachInputRef} value={seachVal} onChange={(e) => setSeachVal(e.target.value)} placeholder='Search...' onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="w-0 text-[1vw] font-bold text-[#505254] outline-none" />
+                    <div ref={wrapperRef} className='relative h-fit flex justify-between items-center bg-[#fcfcfa] rounded-full border border-[#50525449]'>
+                        <Image onClick={() => searchInputRef.current?.focus()} className='w-[2vw]  p-[0.35vw] ' src="/svg/search-line.svg" alt="search logo" width={50} height={50} />
+                        <input ref={searchInputRef} value={seachVal} onChange={(e) => setSeachVal(e.target.value)} placeholder='Search...' onFocus={() => setFocused(true)}
+                            className="w-0 text-[1vw] font-bold text-[#505254] outline-none" />
+
                         {(focused) ?
-                            <div className='w-full h-[15.5vw] absolute top-[2.5vw] flex flex-col gap-[0.4vw] overflow-auto no-scrollbar'>
+                            <div className='w-full h-[16vw] absolute top-[2.5vw] flex flex-col gap-[0.4vw] overflow-auto no-scrollbar'>
                                 {searchResult.map((item, index) => {
-                                    return (<div key={index} className='w-full p-[0.2vw] flex items-center bg-white/20 backdrop-blur-lg border-2 border-white/30 rounded-[1vw]'>
-                                        <Image src={item.img} className='w-[5vw]' alt="Burger Imgae" loading="eager" width={585} height={530} />
+                                    return (<div key={index} onClick={() => searchItemClick(item)} className='w-full h-[33%] p-[0.2vw] cursor-pointer bg-white/20 backdrop-blur border-2 border-white/30 rounded-[1vw]'>
+                                        <Link href="/menu" className='flex gap-[0.5vw] items-center'>
+                                            <Image src={item.img} className='w-[5vw]' alt="Burger Imgae" loading="eager" width={585} height={530} />
+                                            <div className="flex flex-col gap-[0.3vw] justify-center w-[15vw] h-full ">
+                                                <h1 className="font-[fontBold] leading-[1vw] text-[1.1vw]">{item.name}</h1>
+                                                <p className="w-[13vw] leading-[1vw] text-[#505254] text-[0.9vw]" title={item.description}>
+                                                    {truncateWords(item.description, 7)}
+                                                </p>
+                                            </div>
+                                        </Link>
                                     </div>);
                                 })}
                             </div>
                             : <></>
                         }
+
                     </div>
 
                     <Link href="/favorite">

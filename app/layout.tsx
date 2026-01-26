@@ -296,6 +296,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   // Home to Menu Linking states for selecting item directly
   const [callFromHome, setCallFromHome] = useState(false);
 
+  // Nav to Menu Linking states for selecting item directly
+  const [navToMenu, setNavToMenu] = useState(false);
+
   // Home Page Context States
   const [curr_selection, setCurr_selection] = useState(0);
   const [curr_card, setCurr_card] = useState(0);
@@ -305,7 +308,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className="w-screen h-screen bg-[#FFF8EE]">
         <TransitionProvider>
-          <burgerContext.Provider value={{ favoriteData, setFavoriteData, checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
+          <burgerContext.Provider value={{ navToMenu, setNavToMenu, favoriteData, setFavoriteData, checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
             <Nav />
             {children}
           </burgerContext.Provider>

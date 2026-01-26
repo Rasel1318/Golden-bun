@@ -73,7 +73,7 @@ const MenuLeft = () => {
             <div className="relative flex flex-wrap gap-[0.5vw] ">
 
                 {/* work here */}
-                <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 rounded-[0.8vw] bg-[#FC9412]" >
+                <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 border-2 border-[#d5dce249] rounded-[0.8vw] bg-[#FC9412]" >
                     <div className="w-full p-[0.5vw] rounded-[0.8vw]">
                         <div className="w-[2.8vw] h-[2.8vw] p-[0.4vw]" />
                     </div>

@@ -13,7 +13,7 @@ const HeroBottom = () => {
   const RightSvgRef = useRef(null);
 
   // Context
-  const { callFromHome, setCallFromHome, indexTracing, setItemActive, setMenuActive, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = useContext(burgerContext);
+  const { setPreActiveSelection, setCallFromHome, indexTracing, setItemActive, setMenuActive, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = useContext(burgerContext);
 
   // Handlers / Functions
   const cardClick = (e) => {
@@ -75,6 +75,7 @@ const HeroBottom = () => {
   }
   const linkWithMenu = (index) => {
     setCallFromHome(true);
+    setPreActiveSelection(indexTracing[index][0]);
     setMenuActive(indexTracing[index][0]);
     setItemActive(indexTracing[index][1]);
   }

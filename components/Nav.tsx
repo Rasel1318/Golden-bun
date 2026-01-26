@@ -12,14 +12,40 @@ const Nav = () => {
     const homeRef = useRef(null), menuRef = useRef(null), storyRef = useRef(null), contactRef = useRef(null), checkOutRef = useRef(null), favoriteRef = useRef(null);
     const navRaf = useRef(null);
     const cartCountRef = useRef(null);
+    const serachInputRef = useRef(null);
+
     // Animations Refs
     const HomeAnimateRef = useRef(null);
-    const { checkoutData } = useContext(burgerContext);
+    const { checkoutData, MenuItemData } = useContext(burgerContext);
 
+    // States
     const path = usePathname();
     const [pre_path, setPre_path] = useState(path);
+    const [focused, setFocused] = useState(false);
+    const [seachVal, setSeachVal] = useState("");
+    const searchResult = (seachVal.length !== 0) ? MenuItemData.flatMap((prev) => {
+        return prev.filter((item) =>
+            item.name.toLowerCase().includes(seachVal.toLowerCase())
+        )
+    }) : [];
 
     // Animations
+    useEffect(() => {
+        if (focused) {
+            gsap.to(serachInputRef.current, {
+                width: "20vw",
+                duration: 0.3,
+                overwrite: "auto",
+            })
+        } else {
+            gsap.to(serachInputRef.current, {
+                width: 0,
+                duration: 0.3,
+                overwrite: "auto",
+            })
+        }
+    }, [focused])
+
     useEffect(() => {
         const tl = gsap.timeline();
         if (pre_path === '/') {
@@ -33,7 +59,7 @@ const Nav = () => {
         } else if (pre_path === '/checkout') {
             tl.to(checkOutRef.current, { backgroundColor: "#fcfcfa", color: "#505254" })
             if (cartCountRef.current) tl.to(cartCountRef.current, { backgroundColor: "#FC9412" })
-        }else if (pre_path === '/favorite') {
+        } else if (pre_path === '/favorite') {
             tl.to(favoriteRef.current, { backgroundColor: "#fcfcfa", color: "#505254" })
         }
 
@@ -48,7 +74,7 @@ const Nav = () => {
         } else if (path === '/checkout') {
             tl.to(checkOutRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
             if (cartCountRef.current) tl.to(cartCountRef.current, { backgroundColor: "#FFF8EE" })
-        }else if (path === '/favorite') {
+        } else if (path === '/favorite') {
             tl.to(favoriteRef.current, { backgroundColor: "#FC9412", color: "#fcfcfa" })
         }
 
@@ -127,13 +153,25 @@ const Nav = () => {
                     <Link ref={storyRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/ourstory">Our Story</Link>
                     <Link ref={contactRef} className='z-1 px-[1vw] text-[#505254] rounded-full' href="/contact">Contact</Link>
                 </div>
-                <div className='flex gap-[1vw] justify-center items-center w-[10vw] h-full '>
+                <div className='flex gap-[1vw] justify-center items-center w-fit h-full'>
+                    <div className='relative h-full flex justify-between items-center bg-[#fcfcfa] rounded-full border border-[#50525449]'>
+                        <Image onClick={() => serachInputRef.current?.focus()} className='w-[2vw]  p-[0.35vw] ' src="/svg/search-line.svg" alt="search logo" width={50} height={50} />
+                        <input ref={serachInputRef} value={seachVal} onChange={(e) => setSeachVal(e.target.value)} placeholder='Search...' onFocus={() => setFocused(true)} onBlur={() => setFocused(false)} className="w-0 text-[1vw] font-bold text-[#505254] outline-none" />
+                        {(focused) ?
+                            <div className='w-full h-[15.5vw] absolute top-[2.5vw] flex flex-col gap-[0.4vw] overflow-auto no-scrollbar'>
+                                {searchResult.map((item, index) => {
+                                    return (<div key={index} className='w-full p-[0.2vw] flex items-center bg-white/20 backdrop-blur-lg border-2 border-white/30 rounded-[1vw]'>
+                                        <Image src={item.img} className='w-[5vw]' alt="Burger Imgae" loading="eager" width={585} height={530} />
+                                    </div>);
+                                })}
+                            </div>
+                            : <></>
+                        }
+                    </div>
 
-                    <Image className='w-[2vw] bg-[#fcfcfa] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/search-line.svg" alt="burger-logo" width={50} height={50} />
                     <Link href="/favorite">
                         <Image ref={favoriteRef} className='w-[2vw] bg-[#fcfcfa] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/heart-line.svg" alt="burger-logo" width={50} height={50} />
                     </Link>
-                    {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(0,0,0,1)"><path d="M12.001 4.52853C14.35 2.42 17.98 2.49 20.2426 4.75736C22.5053 7.02472 22.583 10.637 20.4786 12.993L11.9999 21.485L3.52138 12.993C1.41705 10.637 1.49571 7.01901 3.75736 4.75736C6.02157 2.49315 9.64519 2.41687 12.001 4.52853Z"></path></svg> */}
                     <Link className='relative' href="/checkout">
                         {(checkoutData.length !== 0) ?
                             <div ref={cartCountRef} className="absolute top-[-0.3vw] flex items-center justify-center right-[-0.3vw] w-[1vw] h-[1vw] bg-[#FC9412] rounded-full border border-[#50525449]" >

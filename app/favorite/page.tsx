@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { burgerContext } from "../layout";
 import Image from "next/image";
 import gsap from 'gsap'
@@ -8,7 +8,7 @@ import MorphSVGPlugin from "gsap/MorphSVGPlugin";
 gsap.registerPlugin(MorphSVGPlugin);
 const Page = () => {
 
-  const { favoriteData, setFavoriteData, checkoutData, setCheckoutData, itemActive, setItemActive, menuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const { version, favoriteData, setFavoriteData, checkoutData, setCheckoutData, itemActive, setItemActive, menuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
 
   const plusSvgRef = useRef([]);
 
@@ -30,32 +30,47 @@ const Page = () => {
       return prev.filter((item) => !(item.name === data.name))
     })
   }
-  const cardCartIconClick = (index) => {
-    const data = favoriteData[index];
+  const cardCartIconClick = (itemId) => {
+    const ind = favoriteData.findIndex(item => item.id === itemId);
     setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.name === data.name);
+      const exist = prev.find((item) => item.id === itemId);
       if (exist) return prev;
 
-      data.quantity = (data.quantity !== 0) ? data.quantity : 1;
-      data.status = true;
-      return [...prev, data];
+      const d = { ...favoriteData[ind] };
+      d.quantity = (d.quantity !== 0) ? d.quantity : 1;
+      d.status = true;
+      return [...prev, d];
     })
     setMenuItemData((prev) => {
       return prev.map((menu, pindex) =>
-        (pindex === data.menuInd) ?
+        (pindex === favoriteData[ind].menuInd) ?
           menu.map((item) => {
-            if (item.name === data.name)
+            if (item.id === itemId)
               return { ...item, quantity: (item.quantity === 0) ? 1 : item.quantity, status: true };
             return item;
           })
           : menu
       );
     });
-    if (!plusSvgRef.current[index]) return;
-    
-    gsap.to(plusSvgRef.current[index], {morphSVG:"M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z", transformOrigin: "50% 50%",rotate: 360,})
+    // console.log(itemId);
+    setFavoriteData((prev) => {
+      return prev.map((item) =>
+        (item.id === itemId)
+          ? { ...item, status: true, quantity: 1 }
+          : item
+      )
+    })
+    // if (!plusSvgRef.current[data.id]) return;
+    // if (!data.status) gsap.to(plusSvgRef.current[data.id], {
+    //   morphSVG: "M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z",
+    //   transformOrigin: "50% 50%",
+    //   rotate: 360,
+    //   onComplete: () => {
+    //   }
+    // })
   }
 
+  console.log(favoriteData);
   return (
     <div className="w-full h-full pt-[7vh] flex items-center justify-center font-[font1]">
       <div className="w-[85vw] h-[85vh] ">
@@ -63,7 +78,7 @@ const Page = () => {
           {(favoriteData === null || favoriteData === undefined || favoriteData.length === 0)
             ? <div className="w-full h-full flex items-center justify-center"><p className=" font-[fontBold] text-[5vw]">Empty</p> </div>
             : favoriteData.map((item, index) => {
-              return (<div key={index} className="relative w-[17vw] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
+              return (<div key={`${index}-${version}`} className="relative w-[17vw] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
                 <div className="w-[13vw] h-[9vw] z-1 rounded-full absolute top-[-9.5vw] left-[12.5%] bg-[#fc9312d6] blur-[2vw]" />
                 <Image src={item.img} className='absolute top-[-12vw] left-[2%] w-[15vw] z-2' alt="Burger Imgae" loading="eager" width={585} height={530} />
                 {(item.fev)
@@ -74,8 +89,10 @@ const Page = () => {
                     <Image className='w-[2vw] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/heart-line.svg" alt="burger-logo" width={50} height={50} />
                   </div>
                 }
-                {/* <Image onClick={() => cardCartIconClick(index)} className=' absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full' src="/svg/plus.svg" loading="eager" alt="Add Cart" width={50} height={50} /> */}
-                <svg onClick={() => cardCartIconClick(index)} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path ref={(e) => plusSvgRef.current[index] = e} d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+                {(!item.status)
+                  ? <svg onClick={() => { cardCartIconClick(item.id); }} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+                  : <svg className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>
+                }
                 <h1 className="font-[fontBold] text-[1.2vw]">{item.name}</h1>
                 <p className="text-[#FC9412] text-[1.3vw]">{item.rating}</p>
                 <p className="text-[#FC9412] font-[fontBold] text-[1.2vw]">${item.price}</p>

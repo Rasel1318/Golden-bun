@@ -7,6 +7,9 @@ import TransitionProvider from "@/providers/TransitionProvider";
 const burgerContext = createContext();
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+  // App Version
+  const version = "1.0"
+
   // Menu Data for Menu Page
   const [MenuData, setMenuData] = useState([
     {
@@ -57,6 +60,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-1"
       },
       {
         name: "Double Beef Bacon Burger",
@@ -70,6 +74,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-2"
       },
       {
         name: "Ghost Pepper Burger",
@@ -83,6 +88,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-3"
       },
       {
         name: "Mushroom Melt Burger",
@@ -96,6 +102,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-4"
       },
       {
         name: "Crispy Chicken Burger",
@@ -109,6 +116,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-5"
       },
       {
         name: "Veggie Delight Burger",
@@ -122,6 +130,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 0,
         fev: false,
+        id: "burger-5"
       },
     ],
     [
@@ -137,6 +146,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 1,
         fev: false,
+        id: "sub-1"
       }
     ],
     [],
@@ -153,6 +163,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-1"
       },
       {
         name: "All-American Crunch Dog",
@@ -166,6 +177,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-2"
       },
       {
         name: "Bacon-Wrapped Hot Dog",
@@ -179,6 +191,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-3"
       },
       {
         name: "Nacho Cheese Dog",
@@ -192,6 +205,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-4"
       },
       {
         name: "Spicy Sriracha Dog",
@@ -205,6 +219,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-5"
       },
       {
         name: "Classic American Hot Dog",
@@ -218,6 +233,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         status: false,
         menuInd: 3,
         fev: false,
+        id: "dog-6"
       },
     ],
     [],
@@ -308,7 +324,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className="w-screen h-screen bg-[#FFF8EE]">
         <TransitionProvider>
-          <burgerContext.Provider value={{ navToMenu, setNavToMenu, favoriteData, setFavoriteData, checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
+          <burgerContext.Provider value={{ version,navToMenu, setNavToMenu, favoriteData, setFavoriteData, checkoutData, setCheckoutData, indexTracing, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, MenuItemData, setMenuItemData, MenuData, imgSrc, setImgSrc, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext }}>
             <Nav />
             {children}
           </burgerContext.Provider>

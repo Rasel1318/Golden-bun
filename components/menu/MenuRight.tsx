@@ -27,6 +27,7 @@ const MenuRight = () => {
     status: boolean,
     menuInd: number,
     fev: boolean,
+    id: string,
   };
 
   const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
@@ -69,10 +70,19 @@ const MenuRight = () => {
       data.status = true;
       return [...prev, data];
     })
-    gsap.to(plusSvgRef.current[index], {
-      morphSVG: "M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z",
-      transformOrigin: "50% 50%",
-      rotate: 360,
+    setFavoriteData((prev) => {
+      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
+      if (exist) {
+        return prev.map((item) =>
+          item.name === MenuItemData[menuActive][index].name
+            ? { ...item, status: true, quantity: 1 }
+            : item
+        )
+      }
+      gsap.to(plusSvgRef.current[index], {
+        morphSVG: "M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z",
+      })
+      return prev;
     })
   }
   const cartBtnHandler = () => {
@@ -159,6 +169,20 @@ const MenuRight = () => {
         (item) => !(item.name === name && item.quantity === 0)
       )
     );
+    setFavoriteData((prev) => {
+      const q: number = Math.max(quantity - 1, 0);
+      if (!q) {
+        const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
+        if (exist) {
+          return prev.map((item) =>
+            item.name === MenuItemData[menuActive][itemActive].name
+              ? { ...item, status: false, quantity: 0 }
+              : item
+          )
+        }
+      }
+      return prev;
+    })
   };
   const quantityPlusHandler = () => {
     setQuantity(prev => prev + 1);
@@ -201,18 +225,11 @@ const MenuRight = () => {
       );
     });
     setFavoriteData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
-      if (exist) return prev.map((item) =>
-        item.name === MenuItemData[menuActive][index].name
-          ? { ...item, fev: true }
-          : item
-      )
       const data = MenuItemData[menuActive][index];
       data.fev = true;
       return [...prev, data];
     })
   }
-
   const removeFev = (index: number) => {
     setMenuItemData((prev) => {
       return prev.map((menu, pindex) =>
@@ -288,7 +305,7 @@ const MenuRight = () => {
   }, [menuActive]);
 
   useEffect(() => {
-    if(navToMenu){
+    if (navToMenu) {
       setItem(MenuItemData[menuActive][itemActive] ?? null);
       setNavToMenu(false);
     }
@@ -323,7 +340,10 @@ const MenuRight = () => {
                 <Image className='w-[2vw] p-[0.35vw] rounded-full border border-[#50525449]' src="/svg/heart-line.svg" alt="burger-logo" width={50} height={50} />
               </div>
             }
-            <svg onClick={() => cardCartIconClick(index)} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path ref={(e) => plusSvgRef.current[index] = e} d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+            {(!item.status)
+              ? <svg onClick={() => { cardCartIconClick(index); }} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path ref={(e) => plusSvgRef.current[index] = e} d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+              : <svg className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>
+            }
             <h1 className="font-[fontBold] text-[1.2vw]">{item.name}</h1>
             <p className="text-[#FC9412] text-[1.3vw]">{item.rating}</p>
             <p className="text-[#FC9412] font-[fontBold] text-[1.2vw]">${item.price}</p>

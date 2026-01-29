@@ -25,7 +25,7 @@ const Page = () => {
   const checkOutParent = useRef(null);
 
   // Contexts 
-  const { checkoutData, setCheckoutData, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const { checkoutData, setCheckoutData, setFavoriteData, setMenuItemData } = useContext(burgerContext);
 
   // Functions
   function truncateWords(text: string, maxWords = 7) {
@@ -76,7 +76,13 @@ const Page = () => {
     const targetInd = checkoutData.findIndex(
       (el) => el.name === name
     );
-
+    setFavoriteData((prev) =>
+      prev.map((item)=>
+        (item.name===name)
+        ? {...item, status:false, quantity:0,}
+        :item
+      )
+    );
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
       tl.to(cartElementRef.current[targetInd], {
@@ -104,16 +110,15 @@ const Page = () => {
         }
       })
     });
-
     return () => ctx.revert();
   }
   useEffect(() => {
-    setSubtotal(()=>0);
-    const initialTotal = checkoutData.reduce((sum:number, item)=>{
-      return sum + Number(item.price)*Number(item.quantity);
+    setSubtotal(() => 0);
+    const initialTotal = checkoutData.reduce((sum: number, item) => {
+      return sum + Number(item.price) * Number(item.quantity);
     }, 0)
     setSubtotal(Number(initialTotal.toFixed(2)));
-    setTotal(Number((initialTotal + ((checkoutData.length===0)?0:(Number(delivery)))).toFixed(3)));
+    setTotal(Number((initialTotal + ((checkoutData.length === 0) ? 0 : (Number(delivery)))).toFixed(3)));
   }, [checkoutData])
 
   return (

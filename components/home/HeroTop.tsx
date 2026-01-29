@@ -1,8 +1,9 @@
 "use client";
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { burgerContext } from '@/app/layout';
 import gsap from 'gsap';
+import Link from 'next/link';
 
 const HeroTop = () => {
     // Refs
@@ -196,7 +197,9 @@ const HeroTop = () => {
                 </div>
 
                 <div className='flex items-center gap-[1vw]'>
-                    <button className='uppercase border-2 cursor-pointer bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
+                    <Link href="/menu">
+                        <button className='uppercase border-2 cursor-pointer bg-[#FC9412] text-[#FFF8EE] text-[2vw] font-semibold border-[#d69026] rounded-4xl px-[1vw] py-[0.2vh]' >order now</button>
+                    </Link>
                     <div ref={calPriceWidRef} className='overflow-hidden '>
                         <div ref={movePriceRef} className=' h-[3.5vw]' >
                             {burgerInfoContext.map((burgerInfo, index) => {

@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import { burgerContext } from '@/app/layout';
 import gsap from 'gsap';
@@ -29,7 +29,7 @@ const HeroTop = () => {
     const [prev_selection, setPrev_selection] = useState(-1);
 
     // Animations
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from(AllHeroTextRef.current, {
                 x: -150,
@@ -40,7 +40,7 @@ const HeroTop = () => {
         return () => ctx.revert();
     }, [])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const ctx = gsap.context(() => {
             setPrev_selection((prev) => {
                 if (prev !== -1) {

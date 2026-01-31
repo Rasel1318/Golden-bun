@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { burgerContext } from '@/app/layout';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const Nav = () => {
     // Refs
@@ -100,7 +100,7 @@ const Nav = () => {
         });
     }, [path])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         gsap.from(navRaf.current, {
             y: -100,
             opacity: 0,

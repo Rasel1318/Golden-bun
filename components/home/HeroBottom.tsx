@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useLayoutEffect, useRef } from 'react'
 import { burgerContext } from '@/app/layout';
 import Link from 'next/link';
 import gsap from 'gsap'
@@ -21,7 +21,7 @@ const HeroBottom = () => {
   }
 
   // Animations
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(cardParentRef.current, {
         x: -150,

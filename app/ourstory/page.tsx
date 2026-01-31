@@ -94,7 +94,6 @@ const Page = () => {
             <Image ref={imgRef} src={imgPath[active]} className='w-full  object-cover h-full rounded-[1vw] drop-shadow-[0px_20px_10px_rgba(0,0,0,0.2)]' alt="Burger Imgae" loading="eager" width={585} height={530} />
           </div>
         </div>
-
       </div>
     </div>
   )

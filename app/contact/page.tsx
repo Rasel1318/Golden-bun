@@ -47,7 +47,6 @@ const Page = () => {
                   <p className="text-[1.1vw] font-semibold text-[#fcfcfa] ">- Follow Us</p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -55,7 +54,7 @@ const Page = () => {
       <div className=" font-[font1] font-semibold absolute w-[25vw] h-[67%] top-[4.2vw] right-[15vw] p-[1.5vw] bg-[#EFE5D8] rounded-[1vw] ">
         <p className="text-[0.6vw] tracking-[0.15vw] text-[#505254] font-semibold">FEEDBACK FORM</p>
 
-        <form className="mt-[3vw] space-y-[2vw]">
+        <form className="mt-[3vw] flex flex-col w-full h-full justify-evenly pb-[2vw]">
           <div className="space-y-2">
             <label className="text-[0.7vw] text-[#505254]" htmlFor="name">Name</label>
             <input id="name" type="text" className="w-full border-0 border-b border-neutral-300 focus:border-[#505254] focus:ring-0 outline-none pb-2 text-[#505254]" placeholder="" />
@@ -68,7 +67,7 @@ const Page = () => {
 
           <div className="space-y-[0.5vw]">
             <label className="text-[0.7vw] text-[#505254]" htmlFor="phone">Phone</label>
-            <input id="phone" type="tel" className="w-full border-0 border-b border-neutral-300 focus:border-[#505254] focus:ring-0 outline-none pb-2 text-[#505254]" placeholder=""/>
+            <input id="phone" type="tel" className="w-full border-0 border-b border-neutral-300 focus:border-[#505254] focus:ring-0 outline-none pb-2 text-[#505254]" placeholder="" />
           </div>
 
           <div className="space-y-[0.5vw]">
@@ -80,14 +79,14 @@ const Page = () => {
           <div className="pt-2 flex items-center justify-between gap-[0.5vw]">
             <label className="inline-flex items-start gap-2 text-[0.8vw] text-[#505254] cursor-pointer select-none">
               <input type="file" className="hidden" />
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"stroke="currentColor" strokeWidth="2" className="h-[1.2vw] w-[1.2vw]">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 18.75H6A4.5 4.5 0 0 1 6 9.75h.245A5.25 5.25 0 0 1 16.5 8.25a3.75 3.75 0 0 1 1.21 7.3"/>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-[1.2vw] w-[1.2vw]">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 18.75H6A4.5 4.5 0 0 1 6 9.75h.245A5.25 5.25 0 0 1 16.5 8.25a3.75 3.75 0 0 1 1.21 7.3" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 12v8m0 0-3-3m3 3 3-3" />
               </svg>
               <span>Upload file</span>
             </label>
 
-            <button type="submit"className="bg-[#FC9412] text-[#fcfcfa] text-[0.7vw] tracking-[0.24em] px-6 py-3 shadow-[0_10px_18px_rgba(0,0,0,0.28)] hover:bg-neutral-800 active:translate-y-[1px] transition">SEND MESSAGE —</button>
+            <button type="submit" className="bg-[#FC9412] text-[#fcfcfa] text-[0.7vw] tracking-[0.24em] px-6 py-3 shadow-[0_10px_18px_rgba(0,0,0,0.28)] hover:bg-neutral-800 active:translate-y-[1px] transition">SEND MESSAGE —</button>
           </div>
         </form>
       </div>

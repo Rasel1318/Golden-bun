@@ -3,21 +3,22 @@ import gsap from 'gsap';
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { burgerContext } from '@/app/layout';
+import { burgerContext, MenuItem } from '@/app/layout';
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 const Nav = () => {
     // Refs
-    const homeRef = useRef(null), menuRef = useRef(null), storyRef = useRef(null), contactRef = useRef(null), checkOutRef = useRef(null), favoriteRef = useRef(null);
-    const navRaf = useRef(null);
-    const cartCountRef = useRef(null);
-    const searchInputRef = useRef(null);
+    const homeRef = useRef<HTMLAnchorElement | null>(null), menuRef = useRef<HTMLAnchorElement | null>(null), storyRef = useRef<HTMLAnchorElement | null>(null), contactRef = useRef<HTMLAnchorElement | null>(null), checkOutRef = useRef<HTMLImageElement | null>(null), favoriteRef = useRef<HTMLImageElement | null>(null);
+    const navRaf = useRef<HTMLDivElement | null>(null);
+    const cartCountRef = useRef<HTMLDivElement | null>(null);
+    const searchInputRef = useRef<HTMLInputElement | null>(null);
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
 
     // Animations Refs
-    const HomeAnimateRef = useRef(null);
-    const { navToMenu, setNavToMenu, checkoutData, MenuItemData, setMenuActive, setItemActive, setCallFromHome, preActiveSelection, setPreActiveSelection } = useContext(burgerContext);
+    const HomeAnimateRef = useRef<gsap.core.Timeline | null>(null);
+    const context = useContext(burgerContext)!;
+    const { setNavToMenu, checkoutData, MenuItemData, setMenuActive, setItemActive, setCallFromHome, preActiveSelection, setPreActiveSelection } = context;
 
     // States
     const path = usePathname();
@@ -36,7 +37,7 @@ const Nav = () => {
         if (words.length <= maxWords) return text;
         return words.slice(0, maxWords).join(" ") + "...";
     }
-    const searchItemClick = (item) => {
+    const searchItemClick = (item: MenuItem) => {
         if(preActiveSelection === -1) setPreActiveSelection(item.menuInd);
         setMenuActive(item.menuInd);
         setCallFromHome(()=>true);
@@ -109,7 +110,7 @@ const Nav = () => {
     }, [])
 
     useEffect(() => {
-        let delayed;
+        let delayed: ReturnType<typeof gsap.delayedCall> | undefined;
         const animateHome = () => {
             HomeAnimateRef.current = gsap.timeline();
             HomeAnimateRef.current.to(menuRef.current, {
@@ -128,6 +129,7 @@ const Nav = () => {
 
         if (path !== "/menu") {
             const ele = menuRef.current;
+            if (!ele) return;
             ele.style.background = "linear-gradient(90deg,#505254,#505254,#00e0ff,#505254)";
             ele.style.backgroundSize = "300% 100%";
             ele.style.backgroundPosition = "0% 0%";
@@ -138,10 +140,12 @@ const Nav = () => {
         }
         else {
             HomeAnimateRef.current?.kill();
-            menuRef.current.style.background = "#505254";
-            menuRef.current.style.color = "#fcfcfa";
+            if (menuRef.current) {
+                menuRef.current.style.background = "#505254";
+                menuRef.current.style.color = "#fcfcfa";
+            }
         }
-        return () => delayed?.kill();
+        return () => { delayed?.kill(); };
     }, [path])
 
     useEffect(() => {

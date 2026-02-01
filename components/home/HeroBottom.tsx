@@ -6,17 +6,18 @@ import Link from 'next/link';
 import gsap from 'gsap'
 const HeroBottom = () => {
   // Refs
-  const cardsRef = useRef({});
-  const moveCardRef = useRef(null);
-  const calCardWidRef = useRef(null);
-  const cardParentRef = useRef(null);
-  const RightSvgRef = useRef(null);
+  const cardsRef = useRef<Record<number, HTMLDivElement | null>>({});
+  const moveCardRef = useRef<HTMLDivElement | null>(null);
+  const calCardWidRef = useRef<HTMLDivElement | null>(null);
+  const cardParentRef = useRef<HTMLDivElement | null>(null);
+  const RightSvgRef = useRef<HTMLImageElement | null>(null);
 
   // Context
-  const { setPreActiveSelection, setCallFromHome, indexTracing, setItemActive, setMenuActive, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = useContext(burgerContext);
+  const context = useContext(burgerContext)!;
+  const { setPreActiveSelection, setCallFromHome, indexTracing, setItemActive, setMenuActive, curr_selection, setCurr_selection, curr_card, setCurr_card, burgerInfoContext } = context;
 
   // Handlers / Functions
-  const cardClick = (e) => {
+  const cardClick = (e: number) => {
     setCurr_selection(e);
   }
 
@@ -47,6 +48,7 @@ const HeroBottom = () => {
   }, [])
 
   useEffect(() => {
+    if (!calCardWidRef.current) return;
     const heightDis = calCardWidRef.current.getBoundingClientRect().height;
     gsap.to(moveCardRef.current, {
       y: -(curr_card * heightDis),
@@ -73,7 +75,7 @@ const HeroBottom = () => {
       return newSelection;
     })
   }
-  const linkWithMenu = (index) => {
+  const linkWithMenu = (index: number) => {
     setCallFromHome(true);
     setPreActiveSelection(indexTracing[index][0]);
     setMenuActive(indexTracing[index][0]);
@@ -87,7 +89,7 @@ const HeroBottom = () => {
         <div ref={calCardWidRef} className='overflow-hidden h-[8.5vw]'>
           <div ref={moveCardRef} className='flex flex-wrap' >
             {burgerInfoContext.map((burgerInfo, index) => {
-              return (<div key={index} ref={(e) => (cardsRef.current[index] = e)} onClick={() => cardClick(index)} className='flex z-2 relative cursor-pointer h-[8.1vw] justify-start w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
+              return (<div key={index} ref={(e) => { cardsRef.current[index] = e; }} onClick={() => cardClick(index)} className='flex z-2 relative cursor-pointer h-[8.1vw] justify-start w-[20vw] mx-[0.3vw] my-[0.2vw] border-2 overflow-hidden border-[#eaa857] rounded-[1vw] bg-[#fcfcfa]'>
                 <div className='ml-[1vw] flex items-center '>
                   <Image src={burgerInfo.img} className='w-[6vw] ' alt="Burger Imgae" loading="eager" width={585} height={530} />
                 </div>

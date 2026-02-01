@@ -7,24 +7,25 @@ import Link from 'next/link';
 
 const HeroTop = () => {
     // Refs
-    const moveNameRef = useRef(null);
-    const NameWidRef = useRef(null);
-    const moveDisRef = useRef(null);
-    const movePriceRef = useRef(null);
-    const calNameWidRef = useRef(null);
-    const calDisWidRef = useRef(null);
-    const calPriceWidRef = useRef(null);
-    const AllHeroTextRef = useRef(null);
+    const moveNameRef = useRef<HTMLDivElement | null>(null);
+    const NameWidRef = useRef<HTMLHeadingElement | null>(null);
+    const moveDisRef = useRef<HTMLDivElement | null>(null);
+    const movePriceRef = useRef<HTMLDivElement | null>(null);
+    const calNameWidRef = useRef<HTMLDivElement | null>(null);
+    const calDisWidRef = useRef<HTMLDivElement | null>(null);
+    const calPriceWidRef = useRef<HTMLDivElement | null>(null);
+    const AllHeroTextRef = useRef<HTMLDivElement | null>(null);
 
     // ImageRefs
-    const imgRef = useRef({});
-    const svgTLeftRef = useRef(null);
-    const svgTRightRef = useRef(null);
-    const svgBLeftRef = useRef(null);
-    const svgBRightRef = useRef(null);
+    const imgRef = useRef<Record<number, HTMLImageElement | null>>({});
+    const svgTLeftRef = useRef<HTMLImageElement | null>(null);
+    const svgTRightRef = useRef<HTMLImageElement | null>(null);
+    const svgBLeftRef = useRef<HTMLImageElement | null>(null);
+    const svgBRightRef = useRef<HTMLImageElement | null>(null);
 
     // Contaxts
-    const { curr_selection, burgerInfoContext, imgSrc, setImgSrc } = useContext(burgerContext);
+    const context = useContext(burgerContext)!;
+    const { curr_selection, burgerInfoContext, setImgSrc } = context;
 
     const [prev_selection, setPrev_selection] = useState(-1);
 
@@ -145,6 +146,7 @@ const HeroTop = () => {
     }, [curr_selection]);
 
     useEffect(() => {
+        if (!calNameWidRef.current || !calDisWidRef.current || !calPriceWidRef.current) return;
         const widthName = calNameWidRef.current.getBoundingClientRect().width;
         const heightDis = calDisWidRef.current.getBoundingClientRect().height;
         const heightPrice = calPriceWidRef.current.getBoundingClientRect().height;
@@ -218,7 +220,7 @@ const HeroTop = () => {
                         <div className='h-[30vw] w-[30vw] relative '>
                             {burgerInfoContext.map((burgerInfo, index) => {
                                 return (
-                                    <Image key={index} ref={(el) => (imgRef.current[index] = el)} style={{ zIndex: index }} src={burgerInfo.img} className="absolute opacity-0 top-[2vw] w-[30vw] " alt="Burger Imgae" loading="eager" width={585} height={530} />
+                                    <Image key={index} ref={(el) => { imgRef.current[index] = el; }} style={{ zIndex: index }} src={burgerInfo.img} className="absolute opacity-0 top-[2vw] w-[30vw] " alt="Burger Imgae" loading="eager" width={585} height={530} />
                                 );
                             })}
                         </div>

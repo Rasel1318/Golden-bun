@@ -2,33 +2,20 @@
 
 import { useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { burgerContext } from "@/app/layout";
+import { burgerContext, MenuItem } from "@/app/layout";
 import gsap from "gsap";
 import Link from "next/link";
 import MorphSVGPlugin from "gsap/MorphSVGPlugin";
 
 gsap.registerPlugin(MorphSVGPlugin);
 const MenuRight = () => {
-
   // Context
-  const { navToMenu, setNavToMenu, favoriteData, setFavoriteData, checkoutData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, setMenuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const context = useContext(burgerContext)!;
+  const { navToMenu, setNavToMenu, setFavoriteData, setCheckoutData, callFromHome, setCallFromHome, itemActive, setItemActive, menuActive, MenuItemData, setMenuItemData } = context;
 
   // State
   const [quantity, setQuantity] = useState(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
   const [status, setStatus] = useState(MenuItemData?.[menuActive]?.[itemActive]?.status ?? false);
-  type MenuItem = {
-    name: string;
-    description: string;
-    price: number;
-    img: string,
-    rating: string,
-    img2: string,
-    quantity: number,
-    status: boolean,
-    menuInd: number,
-    fev: boolean,
-    id: string,
-  };
 
   const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
   const ItemDisRef = useRef([]);
@@ -39,18 +26,18 @@ const MenuRight = () => {
   const addCartRef = useRef(null);
 
   // Handelers / Functions
-  const cardClickHandler = (index) => {
+  const cardClickHandler = (index: number) => {
     if (index !== itemActive) setItem(MenuItemData[menuActive][index] ?? null);
   };
-  const cardCartIconClick = (index) => {
+  const cardCartIconClick = (index: number) => {
     if (index === itemActive) {
       setStatus(true);
       if (quantity === 0) setQuantity(1);
     }
-    setMenuItemData((prev) => {
-      return prev.map((menu, pindex) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], pindex: number) =>
         (pindex === menuActive) ?
-          menu.map((item, idx) => {
+          menu.map((item: MenuItem, idx: number) => {
             if (idx === index) {
               const q: boolean = item.quantity === 0;
               if (q) return { ...item, quantity: 1, status: true };
@@ -61,8 +48,8 @@ const MenuRight = () => {
           : menu
       );
     });
-    setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
+    setCheckoutData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][index].name);
       if (exist) return prev;
 
       const data = MenuItemData[menuActive][index];
@@ -70,10 +57,10 @@ const MenuRight = () => {
       data.status = true;
       return [...prev, data];
     })
-    setFavoriteData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
+    setFavoriteData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][index].name);
       if (exist) {
-        return prev.map((item) =>
+        return prev.map((item: MenuItem) =>
           item.name === MenuItemData[menuActive][index].name
             ? { ...item, status: true, quantity: 1 }
             : item
@@ -95,10 +82,10 @@ const MenuRight = () => {
       });
     });
     if (quantity === 0) setQuantity(1);
-    setMenuItemData((prev) => {
-      return prev.map((menu, index) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], index: number) =>
         (index === menuActive) ?
-          menu.map((item, idx) => {
+          menu.map((item: MenuItem, idx: number) => {
             if (idx === itemActive)
               return { ...item, quantity: (item.quantity !== 0) ? quantity : 1, status: true };
             return item;
@@ -106,9 +93,9 @@ const MenuRight = () => {
           : menu
       )
     });
-    setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
-      if (exist) return prev.map((item) =>
+    setCheckoutData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item: MenuItem) =>
         item.name === MenuItemData[menuActive][itemActive].name
           ? { ...item, quantity: (item.quantity !== 0) ? quantity : 1, status: true }
           : item
@@ -123,7 +110,7 @@ const MenuRight = () => {
 
 
   const quantityMinusHandler = (name: string) => {
-    setQuantity(prev => {
+    setQuantity((prev: number) => {
       const q: number = Math.max(prev - 1, 0);
       if (!q) {
         gsap.to(checkOutRef.current, {
@@ -138,10 +125,10 @@ const MenuRight = () => {
       }
       return q;
     });
-    setMenuItemData((prev) =>
-      prev.map((menu, index) =>
+    setMenuItemData((prev: MenuItem[][]) =>
+      prev.map((menu: MenuItem[], index: number) =>
         (index === menuActive) ?
-          menu.map((item, idx) => {
+          menu.map((item: MenuItem, idx: number) => {
             if (idx === itemActive) {
               const q: number = Math.max(item.quantity - 1, 0);
               if (!q) return { ...item, quantity: 0, status: false }
@@ -152,26 +139,26 @@ const MenuRight = () => {
           : menu
       )
     );
-    setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
-      if (exist) return prev.map((item) =>
+    setCheckoutData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item: MenuItem) =>
         item.name === MenuItemData[menuActive][itemActive].name
           ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
           : item
       )
       return [...prev, MenuItemData[menuActive][itemActive]];
     })
-    setCheckoutData((prev) =>
+    setCheckoutData((prev: MenuItem[]) =>
       prev.filter(
-        (item) => !(item.name === name && item.quantity === 0)
+        (item: MenuItem) => !(item.name === name && item.quantity === 0)
       )
     );
-    setFavoriteData((prev) => {
+    setFavoriteData((prev: MenuItem[]) => {
       const q: number = Math.max(quantity - 1, 0);
       if (!q) {
-        const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
+        const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][itemActive].name);
         if (exist) {
-          return prev.map((item) =>
+          return prev.map((item: MenuItem) =>
             item.name === MenuItemData[menuActive][itemActive].name
               ? { ...item, status: false, quantity: 0 }
               : item
@@ -182,11 +169,11 @@ const MenuRight = () => {
     })
   };
   const quantityPlusHandler = () => {
-    setQuantity(prev => prev + 1);
-    setMenuItemData((prev) => {
-      return prev.map((menu, index) =>
+    setQuantity((prev: number) => prev + 1);
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], index: number) =>
         (index === menuActive) ?
-          (menu.map((item, idx) =>
+          (menu.map((item: MenuItem, idx: number) =>
             (idx === itemActive) ?
               { ...item, quantity: item.quantity + 1 }
               : item
@@ -194,9 +181,9 @@ const MenuRight = () => {
           : menu
       )
     });
-    setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][itemActive].name);
-      if (exist) return prev.map((item) =>
+    setCheckoutData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][itemActive].name);
+      if (exist) return prev.map((item: MenuItem) =>
         item.name === MenuItemData[menuActive][itemActive].name
           ? { ...item, quantity: item.quantity + 1 }
           : item
@@ -209,10 +196,10 @@ const MenuRight = () => {
   };
 
   const addFev = (index: number) => {
-    setMenuItemData((prev) => {
-      return prev.map((menu, pindex) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], pindex: number) =>
         (pindex === menuActive) ?
-          menu.map((item, idx) => {
+          menu.map((item: MenuItem, idx: number) => {
             if (idx === index) {
               return { ...item, fev: true };
             }
@@ -221,17 +208,17 @@ const MenuRight = () => {
           : menu
       );
     });
-    setFavoriteData((prev) => {
+    setFavoriteData((prev: MenuItem[]) => {
       const data = MenuItemData[menuActive][index];
       data.fev = true;
       return [...prev, data];
     })
   }
   const removeFev = (index: number) => {
-    setMenuItemData((prev) => {
-      return prev.map((menu, pindex) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], pindex: number) =>
         (pindex === menuActive) ?
-          menu.map((item, idx) => {
+          menu.map((item: MenuItem, idx: number) => {
             if (idx === index) {
               return { ...item, fev: false };
             }
@@ -240,9 +227,9 @@ const MenuRight = () => {
           : menu
       );
     });
-    setFavoriteData((prev) => {
-      const exist = prev.find((item) => item.name === MenuItemData[menuActive][index].name);
-      if (exist) return prev.filter((item) => !(item.name === MenuItemData[menuActive][index].name))
+    setFavoriteData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.name === MenuItemData[menuActive][index].name);
+      if (exist) return prev.filter((item: MenuItem) => !(item.name === MenuItemData[menuActive][index].name))
       return prev;
     })
   }

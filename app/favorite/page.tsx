@@ -1,6 +1,6 @@
 "use client";
-import { useContext, useEffect, useRef, useState } from "react";
-import { burgerContext } from "../layout";
+import { useContext } from "react";
+import { burgerContext, MenuItem } from "../layout";
 import Image from "next/image";
 import gsap from 'gsap'
 import MorphSVGPlugin from "gsap/MorphSVGPlugin";
@@ -8,14 +8,15 @@ import MorphSVGPlugin from "gsap/MorphSVGPlugin";
 gsap.registerPlugin(MorphSVGPlugin);
 const Page = () => {
 
-  const { version, favoriteData, setFavoriteData, checkoutData, setCheckoutData, itemActive, setItemActive, menuActive, MenuItemData, setMenuItemData } = useContext(burgerContext);
+  const context = useContext(burgerContext)!;
+  const { version, favoriteData, setFavoriteData, setCheckoutData, setMenuItemData } = context;
 
   const removeFev = (index: number) => {
     const data = favoriteData[index];
-    setMenuItemData((prev) => {
-      return prev.map((menu, pindex) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], pindex: number) =>
         (pindex === data.menuInd) ?
-          menu.map((item) => {
+          menu.map((item: MenuItem) => {
             if (item.name === data.name) {
               return { ...item, fev: false };
             }
@@ -24,14 +25,14 @@ const Page = () => {
           : menu
       );
     });
-    setFavoriteData((prev) => {
-      return prev.filter((item) => !(item.name === data.name))
+    setFavoriteData((prev: MenuItem[]) => {
+      return prev.filter((item: MenuItem) => !(item.name === data.name))
     })
   }
-  const cardCartIconClick = (itemId) => {
-    const ind = favoriteData.findIndex(item => item.id === itemId);
-    setCheckoutData((prev) => {
-      const exist = prev.find((item) => item.id === itemId);
+  const cardCartIconClick = (itemId: string) => {
+    const ind = favoriteData.findIndex((item: MenuItem) => item.id === itemId);
+    setCheckoutData((prev: MenuItem[]) => {
+      const exist = prev.find((item: MenuItem) => item.id === itemId);
       if (exist) return prev;
 
       const d = { ...favoriteData[ind] };
@@ -39,10 +40,10 @@ const Page = () => {
       d.status = true;
       return [...prev, d];
     })
-    setMenuItemData((prev) => {
-      return prev.map((menu, pindex) =>
+    setMenuItemData((prev: MenuItem[][]) => {
+      return prev.map((menu: MenuItem[], pindex: number) =>
         (pindex === favoriteData[ind].menuInd) ?
-          menu.map((item) => {
+          menu.map((item: MenuItem) => {
             if (item.id === itemId)
               return { ...item, quantity: (item.quantity === 0) ? 1 : item.quantity, status: true };
             return item;
@@ -51,8 +52,8 @@ const Page = () => {
       );
     });
     // console.log(itemId);
-    setFavoriteData((prev) => {
-      return prev.map((item) =>
+    setFavoriteData((prev: MenuItem[]) => {
+      return prev.map((item: MenuItem) =>
         (item.id === itemId)
           ? { ...item, status: true, quantity: 1 }
           : item
@@ -66,7 +67,7 @@ const Page = () => {
         <div className="w-full h-full flex flex-wrap gap-[1vw] p-[2vw] overflow-auto no-scrollbar">
           {(favoriteData === null || favoriteData === undefined || favoriteData.length === 0)
             ? <div className="w-full h-full flex items-center justify-center"><p className=" font-[fontBold] text-[5vw]">Empty</p> </div>
-            : favoriteData.map((item, index) => {
+            : favoriteData.map((item: MenuItem, index: number) => {
               return (<div key={`${index}-${version}`} className="relative w-[18vw] h-fit flex flex-col p-[1vw] mt-[13vw]">
                 <div className="w-[13vw] h-[9vw] z-1 rounded-full absolute top-[-9.5vw] left-[12.5%] bg-[#fc9312d6] blur-[2vw]" />
                 <Image src={item.img} className='absolute top-[-12vw] left-[2%] w-[15vw] z-2' alt="Burger Imgae" loading="eager" width={585} height={530} />

@@ -1,10 +1,57 @@
 "use client";
 import Nav from "@/components/Nav";
 import "./globals.css";
-import { createContext, useState } from "react";
+import { createContext, useState, Dispatch, SetStateAction } from "react";
 import TransitionProvider from "@/providers/TransitionProvider";
 
-const burgerContext = createContext();
+type MenuItem = {
+  name: string;
+  description: string;
+  price: number;
+  img: string;
+  rating: string;
+  img2: string;
+  quantity: number;
+  status: boolean;
+  menuInd: number;
+  fev: boolean;
+  id: string;
+};
+
+export type { MenuItem };
+
+type BurgerContextType = {
+  version: string;
+  navToMenu: boolean;
+  setNavToMenu: Dispatch<SetStateAction<boolean>>;
+  favoriteData: MenuItem[];
+  setFavoriteData: Dispatch<SetStateAction<MenuItem[]>>;
+  checkoutData: MenuItem[];
+  setCheckoutData: Dispatch<SetStateAction<MenuItem[]>>;
+  indexTracing: number[][];
+  callFromHome: boolean;
+  setCallFromHome: Dispatch<SetStateAction<boolean>>;
+  itemActive: number;
+  setItemActive: Dispatch<SetStateAction<number>>;
+  menuActive: number;
+  setMenuActive: Dispatch<SetStateAction<number>>;
+  menuOverlyBool: boolean;
+  setMenuOverlyBool: Dispatch<SetStateAction<boolean>>;
+  preActiveSelection: number;
+  setPreActiveSelection: Dispatch<SetStateAction<number>>;
+  MenuItemData: MenuItem[][];
+  setMenuItemData: Dispatch<SetStateAction<MenuItem[][]>>;
+  MenuData: { name: string; svg: string }[];
+  imgSrc: string;
+  setImgSrc: Dispatch<SetStateAction<string>>;
+  curr_selection: number;
+  setCurr_selection: Dispatch<SetStateAction<number>>;
+  curr_card: number;
+  setCurr_card: Dispatch<SetStateAction<number>>;
+  burgerInfoContext: any[];
+};
+
+const burgerContext = createContext<BurgerContextType | null>(null);
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   // App Version

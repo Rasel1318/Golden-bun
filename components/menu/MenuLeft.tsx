@@ -1,33 +1,25 @@
 "use client";
 import Image from "next/image";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { burgerContext } from "@/app/layout";
 import gsap from "gsap";
 
 const MenuLeft = () => {
     // Refs
-    const mainMenuRef = useRef([]);
-    const menuOverlayRef = useRef(null);
+    const mainMenuRef = useRef<(HTMLDivElement | null)[]>([]);
+    const menuOverlayRef = useRef<HTMLDivElement | null>(null);
 
     // Animation Refs
     const menuTlRef = useRef<gsap.core.Timeline | null>(null);
 
     // Contexts
-    const { menuOverlyBool, setMenuOverlyBool, preActiveSelection, setPreActiveSelection, menuActive, setMenuActive, MenuData } = useContext(burgerContext);
+    const context = useContext(burgerContext)!;
+    const { preActiveSelection, setPreActiveSelection, menuActive, setMenuActive, MenuData } = context;
 
     useEffect(() => {
         const ele = mainMenuRef.current[menuActive];
-        // if (!menuOverlyBool) {
-        //     gsap.to(menuOverlayRef.current, {
-        //         y: ele.getBoundingClientRect().top - menuOverlayRef.current.getBoundingClientRect().top,
-        //         duration: "none",
-        //         onComplete: () => {
-        //             setMenuOverlyBool(true);
-        //         }
-        //     });
-        // }
-        ele.querySelector("h3").classList.add("overlay-enter");
-        // menuOverlayRef.current.style.height = `${ele.getBoundingClientRect().height}px`;
+        if (!ele) return;
+        ele.querySelector("h3")?.classList.add("overlay-enter");
         setPreActiveSelection(menuActive);
     }, []);
 
@@ -36,11 +28,12 @@ const MenuLeft = () => {
         const pre_ele = mainMenuRef.current[preActiveSelection];
         const next_ele = mainMenuRef.current[menuActive];
         const overly_ele = menuOverlayRef.current;
+        if (!pre_ele || !next_ele || !overly_ele) return;
 
         menuTlRef.current = gsap.timeline();
 
-        pre_ele.querySelector("h3").classList.remove("overlay-enter");
-        pre_ele.querySelector("h3").classList.add("overlay-out");
+        pre_ele.querySelector("h3")?.classList.remove("overlay-enter");
+        pre_ele.querySelector("h3")?.classList.add("overlay-out");
 
         const next_y = next_ele.getBoundingClientRect().y;
         const overly_y = overly_ele.getBoundingClientRect().y;
@@ -52,17 +45,16 @@ const MenuLeft = () => {
             ease: "elastic.out(1,1)",
         });
 
-        next_ele.querySelector("h3").classList.add("overlay-enter");
-        next_ele.querySelector("h3").classList.remove("overlay-out");
+        next_ele.querySelector("h3")?.classList.add("overlay-enter");
+        next_ele.querySelector("h3")?.classList.remove("overlay-out");
 
         setPreActiveSelection(menuActive);
         return () => {
             menuTlRef.current?.kill();
         };
-    }, [menuActive]);
+    }, [menuActive, preActiveSelection, setPreActiveSelection]);
 
-
-    const mainMenuClickHandler = (index) => {
+    const mainMenuClickHandler = (index: number) => {
         if (index === menuActive) return;
         setMenuActive(index);
     }
@@ -72,14 +64,13 @@ const MenuLeft = () => {
             <h3 className="uppercase text-[0.95vw] text-[#737679] font-bold pt-[0.6vw]">Main Menu</h3>
             <div className="relative flex flex-wrap gap-[0.5vw] ">
 
-                {/* work here */}
                 <div ref={menuOverlayRef} className="absolute top-0 w-full z-0 border-2 border-[#d5dce249] rounded-[0.8vw] bg-[#FC9412]" >
                     <div className="w-full p-[0.5vw] rounded-[0.8vw]">
                         <div className="w-[2.8vw] h-[2.8vw] p-[0.4vw]" />
                     </div>
                 </div>
                 {MenuData.slice(0, 5).map((item, index) => {
-                    return (<div key={index} onClick={() => mainMenuClickHandler(index)} ref={(el) => (mainMenuRef.current[index] = el)} className="flex z-1 w-full cursor-pointer grow-0 shrink-0 items-center p-[0.5vw] rounded-[0.8vw] gap-[1vw] border-2 border-[#d5dce249] ">
+                    return (<div key={index} onClick={() => mainMenuClickHandler(index)} ref={(el) => { mainMenuRef.current[index] = el; }} className="flex z-1 w-full cursor-pointer grow-0 shrink-0 items-center p-[0.5vw] rounded-[0.8vw] gap-[1vw] border-2 border-[#d5dce249] ">
                         <div className="bg-[#fce0b6] rounded-[0.4vw]">
                             <Image src={item.svg} className="w-[2.8vw] h-[2.8vw] p-[0.4vw]" alt="burger_icon" width={64} height={64} />
                         </div>
@@ -88,7 +79,7 @@ const MenuLeft = () => {
                 })}
                 <h3 className="uppercase text-[0.95vw] text-[#737679] font-bold">Drinks</h3>
                 {MenuData.slice(5).map((item, index) => {
-                    return (<div key={index} onClick={() => mainMenuClickHandler(index + 5)} ref={(el) => (mainMenuRef.current[index + 5] = el)} className="flex z-1 w-full cursor-pointer shrink-0 items-center p-[0.5vw] rounded-[0.8vw] gap-[1vw] border-2 border-[#d5dce249] ">
+                    return (<div key={index} onClick={() => mainMenuClickHandler(index + 5)} ref={(el) => { mainMenuRef.current[index + 5] = el; }} className="flex z-1 w-full cursor-pointer shrink-0 items-center p-[0.5vw] rounded-[0.8vw] gap-[1vw] border-2 border-[#d5dce249] ">
                         <div className="bg-[#fce0b6] rounded-[0.4vw]">
                             <Image src={item.svg} className="w-[2.8vw] p-[0.4vw]" alt="burger_icon" width={64} height={64} />
                         </div>

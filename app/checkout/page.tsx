@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState, useMemo } from "react";
 import { burgerContext } from "../layout";
 import Image from "next/image";
 import gsap from "gsap";
@@ -16,16 +16,15 @@ const Page = () => {
   const [Card2, setCard2] = useState("");
   const [Card3, setCard3] = useState("");
   const [Card4, setCard4] = useState("");
-  const [subtotal, setSubtotal] = useState(0);
-  const [delivery, setDelivery] = useState(0.99);
-  const [total, setTotal] = useState(0);
+  const [delivery] = useState(0.99);
 
   //Refs
-  const cartElementRef = useRef([]);
-  const checkOutParent = useRef(null);
+  const cartElementRef = useRef<(HTMLDivElement | null)[]>([]);
+  const checkOutParent = useRef<HTMLDivElement | null>(null);
 
   // Contexts 
-  const { checkoutData, setCheckoutData, setFavoriteData, setMenuItemData } = useContext(burgerContext);
+  const context = useContext(burgerContext)!;
+  const { checkoutData, setCheckoutData, setFavoriteData, setMenuItemData } = context;
 
   // Functions
   function truncateWords(text: string, maxWords = 7) {
@@ -33,7 +32,7 @@ const Page = () => {
     if (words.length <= maxWords) return text;
     return words.slice(0, maxWords).join(" ") + "...";
   }
-  const quantityPlusBtn = (index) => {
+  const quantityPlusBtn = (index: number) => {
     setCheckoutData((prev) => {
       return prev.map((item, idx) =>
         (idx === index) ? { ...item, quantity: item.quantity + 1 }
@@ -43,7 +42,7 @@ const Page = () => {
     setMenuItemData((prev) => {
       return prev.map((menu, ind) =>
         (ind === checkoutData[index].menuInd) ?
-          (menu.map((item, idx) =>
+          (menu.map((item) =>
             (item.name === checkoutData[index].name) ?
               { ...item, quantity: item.quantity + 1 }
               : item
@@ -52,7 +51,7 @@ const Page = () => {
       )
     })
   };
-  const quantityMinusBtn = (index) => {
+  const quantityMinusBtn = (index: number) => {
     setCheckoutData((prev) => {
       return prev.map((item, idx) =>
         (idx === index) ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
@@ -62,7 +61,7 @@ const Page = () => {
     setMenuItemData((prev) => {
       return prev.map((menu, ind) =>
         (ind === checkoutData[index].menuInd) ?
-          (menu.map((item, idx) =>
+          (menu.map((item) =>
             (item.name === checkoutData[index].name) ?
               { ...item, quantity: Math.max(item.quantity - 1, 1) }
               : item
@@ -71,7 +70,7 @@ const Page = () => {
       );
     });
   }
-  const deleteFromCartBtn = (name, index) => {
+  const deleteFromCartBtn = (name: string, index: number) => {
     const menuInd = checkoutData[index].menuInd;
     const targetInd = checkoutData.findIndex(
       (el) => el.name === name
@@ -98,7 +97,7 @@ const Page = () => {
           setMenuItemData((prev) => {
             return prev.map((menu, ind) =>
               (ind === menuInd) ?
-                (menu.map((item, idx) =>
+                (menu.map((item) =>
                   (item.name === name) ?
                     { ...item, quantity: 0, status: false }
                     : item
@@ -112,14 +111,16 @@ const Page = () => {
     });
     return () => ctx.revert();
   }
-  useEffect(() => {
-    setSubtotal(() => 0);
+  const subtotal = useMemo(() => {
     const initialTotal = checkoutData.reduce((sum: number, item) => {
       return sum + Number(item.price) * Number(item.quantity);
     }, 0)
-    setSubtotal(Number(initialTotal.toFixed(2)));
-    setTotal(Number((initialTotal + ((checkoutData.length === 0) ? 0 : (Number(delivery)))).toFixed(3)));
-  }, [checkoutData])
+    return Number(initialTotal.toFixed(2));
+  }, [checkoutData]);
+
+  const total = useMemo(() => {
+    return Number((subtotal + ((checkoutData.length === 0) ? 0 : (Number(delivery)))).toFixed(3));
+  }, [subtotal, checkoutData.length, delivery]);
 
   return (
     <div className="w-full h-full pt-[7vh] flex items-center justify-center font-[font1]">
@@ -142,7 +143,7 @@ const Page = () => {
               {(checkoutData === null || checkoutData === undefined || checkoutData.length === 0)
                 ? <div className="w-full h-full flex items-center justify-center"><p className=" font-[fontBold] text-[5vw]">Empty</p> </div>
                 : checkoutData.map((item, index) => {
-                  return (<div key={index} ref={el => cartElementRef.current[index] = el} className=" w-full h-[8vw] justify-center flex flex-col p-[1vw]">
+                  return (<div key={index} ref={el => { cartElementRef.current[index] = el; }} className=" w-full h-[8vw] justify-center flex flex-col p-[1vw]">
                     <div className="flex justify-between">
                       <div className=" flex gap-[1vw]">
                         <Image src={item.img} className='w-[8vw] object-cover' alt="Burger Imgae" loading="eager" width={585} height={530} />

@@ -345,10 +345,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   ])
 
   // CheckOut Data for checkOut Page
-  const [checkoutData, setCheckoutData] = useState([]);
+  const [checkoutData, setCheckoutData] = useState<MenuItem[]>([]);
 
   // Favorite Data for favorite Page
-  const [favoriteData, setFavoriteData] = useState([]);
+  const [favoriteData, setFavoriteData] = useState<MenuItem[]>([]);
 
   // Menu Page Context States
   const [menuOverlyBool, setMenuOverlyBool] = useState(false);

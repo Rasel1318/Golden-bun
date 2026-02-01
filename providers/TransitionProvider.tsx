@@ -1,11 +1,12 @@
 "use client";
 import gsap from "gsap";
 import { TransitionRouter } from "next-transition-router";
+import { Props } from "next/script";
 import { useRef } from "react";
 
-const TransitionProvider = ({children}) => {
-    const transitionGridRef = useRef(null);
-    const blockRef = useRef([]);
+const TransitionProvider = ({children}:Props) => {
+    const transitionGridRef = useRef<HTMLDivElement | null>(null);
+    const blockRef = useRef<HTMLElement[]|null>([]);
 
     const createTransitionGrid = ()=>{
         if(!transitionGridRef.current) return;
@@ -17,7 +18,7 @@ const TransitionProvider = ({children}) => {
         const width = (window.innerWidth/5)+1;
 
         for(let col = 0; col<5; col++){
-            const block = document.createElement("div");
+            const block:HTMLElement = document.createElement("div");
             block.className = "transition-block";
             block.style.cssText = `
                 width: ${width}px;
@@ -26,7 +27,7 @@ const TransitionProvider = ({children}) => {
                 top:0px;
             `;
             container.appendChild(block);
-            blockRef.current.push(block);
+            blockRef.current?.push(block);
         }
         gsap.set(blockRef.current, {opacity: 1 });
     };
@@ -37,7 +38,7 @@ const TransitionProvider = ({children}) => {
   
   leave={(next)=>{
     createTransitionGrid();
-    transitionGridRef.current.style.pointerEvents= "auto";
+    if (transitionGridRef.current) transitionGridRef.current.style.pointerEvents= "auto";
     const tween = gsap.to(blockRef.current,{
         duration:0.3,
         height: "100%",

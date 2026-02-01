@@ -73,7 +73,7 @@ const Page = () => {
 
           <div className="space-y-[0.5vw]">
             <label className="text-[0.7vw] text-[#505254]" htmlFor="message">Message</label>
-            <textarea id="message" rows="2" className="w-full resize-none border-0 border-b border-neutral-300 focus:border-[#505254] focus:ring-0 outline-none pb-2 text-[#505254]"
+            <textarea id="message" rows={2} className="w-full resize-none border-0 border-b border-neutral-300 focus:border-[#505254] focus:ring-0 outline-none pb-2 text-[#505254]"
             ></textarea>
           </div>
 

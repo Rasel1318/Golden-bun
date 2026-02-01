@@ -17,11 +17,11 @@ const MenuRight = () => {
   const [quantity, setQuantity] = useState(MenuItemData?.[menuActive]?.[itemActive]?.quantity ?? 0);
   const [status, setStatus] = useState(MenuItemData?.[menuActive]?.[itemActive]?.status ?? false);
 
-  const [item, setItem] = useState<MenuItem | null>(MenuItemData[menuActive][itemActive]);
-  const ItemDisRef = useRef([]);
-  const cardRef = useRef([]);
-  const plusSvgRef = useRef([]);
-  const cardParentRef = useRef(null);
+  const [item, setItem] = useState<MenuItem | null>(MenuItemData?.[menuActive]?.[itemActive]);
+  const ItemDisRef = useRef<(HTMLDivElement | null)[]>([]);
+  const cardRef = useRef<(HTMLDivElement | null)[]>([]);
+  const plusSvgRef = useRef<(SVGPathElement | null)[]>([]);
+  const cardParentRef = useRef<HTMLDivElement | null>(null);
   const checkOutRef = useRef(null);
   const addCartRef = useRef(null);
 
@@ -273,7 +273,7 @@ const MenuRight = () => {
       setItem(MenuItemData[menuActive][itemActive] ?? null);
     }
     setCallFromHome(false);
-    cardParentRef.current.scrollTop = 0;
+    if (cardParentRef.current) cardParentRef.current.scrollTo({ top: 0 });
     if (!cardRef.current.filter(Boolean).length) return;
     const ctx = gsap.context(() => {
       gsap.from(cardRef.current, {
@@ -313,7 +313,7 @@ const MenuRight = () => {
     <div className="w-[69vw] h-full flex justify-evenly">
       <div ref={cardParentRef} className='w-[38vw] h-full flex flex-wrap justify-center font-[font1] overflow-auto no-scrollbar'>
         {MenuItemData[menuActive].map((item, index) => {
-          return (<div key={index} onClick={() => { setItemActive(index); cardClickHandler(index) }} ref={(e) => (cardRef.current[index] = e)} className="relative w-[45%] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
+          return (<div key={index} onClick={() => { setItemActive(index); cardClickHandler(index) }} ref={(e) => {cardRef.current[index] = e;}} className="relative w-[45%] cursor-pointer h-fit flex flex-col p-[1vw] mt-[13vw]">
             <div className="w-[13vw] h-[9vw] z-1 rounded-full absolute top-[-9.5vw] left-[12.5%] bg-[#fc9312d6] blur-[2vw]" />
             <Image src={item.img} className='absolute top-[-12vw] left-[2%] w-[15vw] z-2' alt="Burger Imgae" loading="eager" width={585} height={530} />
             {(item.fev)
@@ -325,7 +325,7 @@ const MenuRight = () => {
               </div>
             }
             {(!item.status)
-              ? <svg onClick={() => { cardCartIconClick(index); }} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path ref={(e) => plusSvgRef.current[index] = e} d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
+              ? <svg onClick={() => { cardCartIconClick(index); }} className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path ref={(e) => {plusSvgRef.current[index] = e;}} d="M11 11V5H13V11H19V13H13V19H11V13H5V11H11Z"></path></svg>
               : <svg className="plus absolute hover:scale-110 transition-transform bottom-[16%] right-[12%] shadow-[6px_0_9px_rgba(0,0,0,0.3)] w-[2.2vw] z-4 h-fit bg-[#FC9412] rounded-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="rgba(255,255,255,1)"><path d="M9.9997 15.1709L19.1921 5.97852L20.6063 7.39273L9.9997 17.9993L3.63574 11.6354L5.04996 10.2212L9.9997 15.1709Z"></path></svg>
             }
             <h1 className="font-[fontBold] text-[1.2vw]">{item.name}</h1>
@@ -338,18 +338,18 @@ const MenuRight = () => {
       <div className='w-[28vw] h-full font-[font1] overflow-auto no-scrollbar'>
         {item !== null && item !== undefined && (
           <div className=" w-full h-full flex flex-col justify-between  gap-[0.6vw] p-[1vw] pb-0">
-            <Image ref={(e) => (ItemDisRef.current[0] = e)} src={item.img2} className="w-full h-[17vw] object-cover rounded-[1vw]" loading="eager" alt="Burger Image" width={500} height={500} />
-            <div ref={(e) => (ItemDisRef.current[1] = e)} className=" w-full flex justify-between">
+            <Image ref={(e) => {ItemDisRef.current[0] = e;}} src={item.img2} className="w-full h-[17vw] object-cover rounded-[1vw]" loading="eager" alt="Burger Image" width={500} height={500} />
+            <div ref={(e) => {ItemDisRef.current[1] = e;}} className=" w-full flex justify-between">
               <h1 className="font-[fontBold] leading-[2vw] text-[2vw]">{item.name}</h1>
               <div className="flex flex-col items-end leading-[1.8vw]">
                 <p className="text-[#FC9412] font-[fontBold] text-[1.8vw]">${item.price}</p>
                 <p className="text-[#FC9412] text-[1.6vw]">{item.rating}</p>
               </div>
             </div>
-            <p ref={(e) => (ItemDisRef.current[2] = e)} className="text-[1.2vw] text-[#737679] font-bold">About Description :</p>
-            <p ref={(e) => (ItemDisRef.current[3] = e)} className="text-[#555555] text-[1vw] ">{item.description}</p>
-            <p ref={(e) => (ItemDisRef.current[4] = e)} className="text-[1.2vw] text-[#737679] font-bold">Ingredients :</p>
-            <div ref={(e) => (ItemDisRef.current[5] = e)} className="flex gap-[1vw] ">
+            <p ref={(e) => {ItemDisRef.current[2] = e;}} className="text-[1.2vw] text-[#737679] font-bold">About Description :</p>
+            <p ref={(e) => {ItemDisRef.current[3] = e;}} className="text-[#555555] text-[1vw] ">{item.description}</p>
+            <p ref={(e) => {ItemDisRef.current[4] = e;}} className="text-[1.2vw] text-[#737679] font-bold">Ingredients :</p>
+            <div ref={(e) => {ItemDisRef.current[5] = e;}} className="flex gap-[1vw] ">
               <div className="border-2 w-fit rounded-[0.5vw] overflow-hidden border-[#eaa857]"><Image src="/svg/carrot.png" className="w-[4vw] bg-[#f5efdf] p-[0.4vw]" alt="burger_icon" width={128} height={106} /></div>
               <div className="border-2 w-fit rounded-[0.5vw] overflow-hidden border-[#92ea57]"><Image src="/svg/lettuce.png" className="w-[4vw] bg-[#ebf5df] p-[0.4vw]" alt="burger_icon" width={128} height={106} /></div>
               <div className="border-2 w-fit rounded-[0.5vw] overflow-hidden border-[#ea8157]"><Image src="/svg/tomato.png" className="w-[4vw] bg-[#f5e2df] p-[0.4vw]" alt="burger_icon" width={128} height={106} /></div>

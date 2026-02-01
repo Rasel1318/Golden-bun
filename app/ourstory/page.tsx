@@ -23,11 +23,11 @@ const Page = () => {
   }
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const splits = [];
+      const splits:SplitText[]= [];
       const tl = gsap.timeline();
 
       gsap.utils.toArray(".spl").forEach((el) => {
-        const split = SplitText.create(el, { type: "words,chars" });
+        const split = SplitText.create(el as HTMLElement, { type: "words,chars" });
         splits.push(split);
 
         tl.from(split.words, {
